@@ -1,198 +1,189 @@
-# Dynamic Programming
+# Lab Analyzing Assembly
 
-In this lab we will explore dynamic programming. It is a fancy term, often taught in overly mathematical ways to say:
+This lab seeks to help you understand File I/O in c, along with seeing the basic assembly that is generated for programs before it goes into a binary form.
 
-> If we already calculated an answer, save it, so we don't have to calculate it again!
+👉🏽 **Your Task** will be to write a small C program, that reads an assembly file, and prints out the number of instructions in that file and estimated  cycle count to run the program. 
 
-Really, that is the heart of it. The idea we are willing to spend more on memory, to save time on speed. While there are some complexities, 
-the idea of [memoization] is at the heart of it. If a function is a [pure function], it is relatively easy store the result? 
-Why because with pure functions, you have the following properties (source wikipedia):
+For example, assume  assembly.s has the following code:
+```
+MOVQ a, %rax
+MOVQ b, %rbx
+ADDQ %rbx, %rax
+IMULQ %rbx
+MOVQ %rax, c
+```
 
-1. the function return values are identical for identical arguments 
-2. the function has no side effects 
+Running your program `> estimator.out assembly.s` would print the following to the screen.
 
-In this lab, you will explore adding [memorization] to Pascal's Triangle and exploring the differences
-in speed. This will help you practice for the midterm project. 
+```
+ADD 1
+MOV 3
+MUL 1
 
+Total Instructions = 5
+Total Cycles = 7
+```
+MUL, IMULQ are the same thing, along with MOVQ and MOV, etc. 
 
-## Pascal's Triangle
+Let's get started! 
 
-Here is a cool video for [Pascal's Triangle] (that hopefully you watched before this lab): [Pascal's Triangle - Numberphile]
+## Paired Programming
+Make sure to partner up (or group up). One person should be coding, while the other person is directing. Make sure to ask each other questions, along with the TAs as you work. 
 
-The idea behind Pascal's triangle is that starting 1 for spot 0,0 (first row, single element), each following row is sum of two numbers directly above it. All outer edges are always 1. 
+After you determine the 'driver', have them clone this repo to their own computer. 
 
-![Triangle Animated]
+## Generating Assembly Files (10 Minutes)
 
-Mathematically, this is represented as 
+Both gcc and clang allow you to generate the assembly file for their code.  Looking at [simple.c], we see a program that
+simply adds two numbers, and then ends. However, [simple.s] is the assembly built from this program. This was done using the following option.
 
+> clang -S simple.c
 
-$$\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$$
+👉🏽 **Your Task** Write a **simple** c program, and generate the assembly file.
 
-or a way to look at it code wise:
+To help you better understand, you should write a simple/small C program. After you have completed the program, run the compiler with the `-S` option, to see the assembly generated. 
+
+### Discussion
+* What are some of the assembly commands generated? 
+* Was there more than you expected? 
+* Can you find the functions you wrote easily?
+
+## Writing Estimator
+
+Go ahead and use [estimator.c] for your template. We will slowly work through building the estimator. 
+
+### Program Arguments (5 minutes)
+
+For the program to work, you will want to handle a single program argument. In C, the program arguments are passed in as parameters to your main function. For example, the following program will print out every program argument.
+
 ```c
-unsigned long long pascalr(int n, int k) {
-   if (n == k || k == 0)
-      return 1;
-   else
-      return pascalr(n - 1, k) + pascalr(n - 1, k - 1);
+// Compile with: gcc -g -Wall args.c -o args.out
+// Try running with:
+//          - ./args.out
+//          - ./args.out somefile.c
+//          - ./args.out argv1 argv2
+#include <stdio.h>
+
+// The parameters to the main function are read in
+// when you execute your program on the terminal.
+// argc: is the argument count
+// argv: is a 'variable' number of arguments provided
+//
+// This program shows how to iterate through all of the arguments
+int main(int argc, char** argv){
+
+    printf("argc is the argument count: %d\n",argc);
+
+    // This loop will print out all of the arguments
+    for(int i=0; i < argc; i++){
+        printf("argv[%d] is %s\n",i,argv[i]);
+    }
+
+    // Then you can use the argv's as needed.
+    // example: If argv[1] is suppose to be a particular (like the filename), 
+    //          you can make use of it.
+    //         So your next step would be to use FILE* input = fopen(argv[1],"r");
+    //        Then read every line in that file, and 'parse' the first few characters
+
+    return 0;
 }
 ```
 
-You then have to loop through $n$ and $k$ calling your generator. 
+👉🏽 **Your Task**  Go ahead and add reading the first program argument (if it exists to estimator)
+
+#### Discussion
+* Why would c need two values for program arguments? 
+
+### Reading The File (15 minutes)
+If you followed Mike Shaw's video, you will have a good idea of how to read a file. This follows a similar guideline. 
+
+👉🏽 **Your Task**  Read the file passed in via program arguments, and print out its contents to the screen 
+
+The standard c library stdlib provides a number of File access functions.  If you wanted to open a file using the first 
+program argument, you could do it the following way
+
 ```c
-for (int i = 0; i < n; i++) {
-   for (int j = 0; j <= i; j++) {              
-      unsigned long long tmp = pascalr(i, j);
-      printf("%llu ", tmp);
-   }
-   printf("\n");
+FILE *input = fopen(argv[1],"r");
+```
+
+Now if you wanted to read a line of the file, you would use the following
+
+```c
+char buff[BUFF_SIZE];  // notice BUFF_SIZE is just a number declared at the top
+int r;
+
+r = fscanf(input, "%s", buff);
+```
+
+The above says read the line from input and store it into the buff. If you are at the end of the file, r will equal `EOF`.
+
+As such, to loop through a file, we can use the following:
+
+```c
+char buff[BUFF_SIZE]; 
+int r;
+
+
+FILE *input = fopen(argv[1],"r");
+r = fscanf(input, "%s", buff);
+
+while (r != EOF) {
+   r = fscanf(input, "%s", buff);  // grab the next line and store into buff
 }
+close(input); // don't forget to close a file!
 ```
 
-However, while this algorithm is mathematically sound and easier to write, it is extremely inefficient.
+Using the outline above, add to your estimator.c to print out the contents of the file based on the file name passed into args. This is always a good task to accomplish before working on files. Can you simply dump the contents to the screen! 
 
-There are solutions that are cheaper, and your next step is to add memoization to reduce the cost of this algorithm. 
+### Now The Estimator (60 minutes)
 
-## Updating Pascal.c
-You will see [pascal.c](pascal.c) already has the above recursive version and an iterative version that
-is more expensive on memory, but is faster. There is an even faster iterative version, but it struggles with
-larger numbers due a multiplication and division calculation [ref](https://en.wikipedia.org/wiki/Binomial_coefficient#In_programming_languages). 
+You can read the file! That is half the battle. Now we are ready to define the estimator specifications. 
 
-### Discussion and Code 
-Take this time to compile the given code, and play with the two given solutions. For example if your compile
-command is 
+* Your program should output counts for ADD, SUB, MUL, DIV, MOV, LEA, PUSH, POP, and RET. 
+* Your program should figure out the cycles for each command. You can use the following chart to match cycles on a per command basis (hint: these are already added as defines in your template)
+  * ADD counts as 1 cycle
+  * SUB counts as 1 cycle
+  * MUL counts as 3 cycles
+  * DIV counts as 24 cycles
+  * MOV counts as 1 cycle
+  * LEA counts as 3 cycles
+  * PUSH counts as 1 cycle
+  * POP counts as 1 cycle
+  * RET counts as 1 cycle
+  * For example, is MUL shows up twice, it will say MUL 2 and then later 6 cycles (2 * 3). Or as code:
+    ```c
+    total_mul_cycles = mul_counter * MUL_CYCLES
+    ```
+* For the sake of simplicity, your tools should treat all instructions of the same type as equivalent using the same cycle count for all of the different forms. For instance, ADD would include ADDQ, ADDB, ADDL, etc. and count them all as 1 cycle.
+IMUL is equivalent to MUL, IDIV is equivalent to DIV.
+* You may ignore other assembly instructions (i.e. incq, decq) that are not in the above list.
 
-```text
-clang -Wall pascal.c -o pascal.out
-```
+### Implementation Hints
+* This will involve counters for each command (or an array, but keep it simple / easy at first!) 
+* It will require a very large if/else statement. 
+* Your `if/else if`  will also need to consider `or`, for example "MOV" or "mov" is valid for mov. 
+* `strstr()` helps you find the 'needle in the haystack' of two strings. You will want to use this!
+* First only make your estimator work with a single command (add for example), then work on other commands. 
+* Loop through the file counting first. Then worry about printing at the end. 
 
-You could run the following to produce the following output:
+As always remember to implement incrementally. 
 
-```text
-./pascal.out 10 0 2
-1
-1 1
-1 2 1
-1 3 3 1
-1 4 6 4 1
-1 5 10 10 5 1
-1 6 15 20 15 6 1
-1 7 21 35 35 21 7 1
-1 8 28 56 70 56 28 8 1
-1 9 36 84 126 126 84 36 9 1
-```
+#### Discussion
+* What were some challenges?
+* What do the cycles tell you about the difficulty of the process for the computer?
+* Why does this/knowing assembly matter?
+  * This right here is the hard one. It can be difficult to see the forest through the trees, so discuss some reasons that come to mind and share them with the class at the end. 
+* If you have time, use the Godbolt tool (linked below) to try equivalent programs in various languages. 
+  * How does python and c differ, even if it the code is "equivalent"?
 
-or
-
-```text
-./pascal.out 10 1 2
-1
-1 1
-1 2 1
-1 3 3 1
-1 4 6 4 1
-1 5 10 10 5 1
-1 6 15 20 15 6 1
-1 7 21 35 35 21 7 1
-1 8 28 56 70 56 28 8 1
-1 9 36 84 126 126 84 36 9 1
-```
-
-Both will run relatively quickly, but if you increase your number to ~35, you will see a noticeable increase in time to finish for the recursive version as compared to the iterative solution. 
-
-👉🏽 **Task**: Discuss the following together:
-* What is the Big O for each version, and 
-* What are observations about the code? 
-  * For example, why use uint64 -what does that even mean!? 
-  * Why use typedef? 
-* You can also look up solutions online (there are a plenty of them) and discuss what you find.   
-
-
-
-### Dynamic Programming
-👉🏽 **Task**: Use [pascal.c] to write a dynamic programming variation of how to solve Pascal's Triangle for the Nth row.
-
-Take a moment to discuss and describe dynamic programming in your own words to your partner.  What are some things you are going to need to write a dynamic version of pascal's triangle. 
-
-1. Make sure you declare a multidimensional array. 
-2. Then for each value of  `[n][k]` store that answer in the table, if it isn't already in the table.   
-   Hint: since Pascal's triangle always has positive values 1 or higher, you can do the following for a check
-   ```c
-    if (table[n][k] > 0)  return table[n][k];
-   ```
-
-## Analysis
-
-Writing "scripts" such as [pascal.py](pascal.py) is a very common practice. In this case, it is setup to help generate comparable data between the different types of implementations. Take a moment to explore the script, and generate some data. 
-
-Here is an example output using the script, timeout set to 60 seconds.
-
-| n | Iterative | Recursive | Dynamic Programming |
-|--|:--:|:--:|:--:|
-| 1    | 0.00304 | 0.00244 | 0.00237 |
-| 2    | 0.00236 | 0.00272 | 0.00245 |
-| 3    | 0.00284 | 0.00293 | 0.00232 |
-| 4    | 0.00236 | 0.00276 | 0.00250 |
-| 5    | 0.00234 | 0.00249 | 0.00248 |
-| 6    | 0.00283 | 0.00238 | 0.00266 |
-| 7    | 0.00241 | 0.00232 | 0.00264 |
-| 8    | 0.00242 | 0.00240 | 0.00273 |
-| 9    | 0.00269 | 0.00272 | 0.00299 |
-| 10   | 0.00249 | 0.00276 | 0.00268 |
-| 11   | 0.00277 | 0.00229 | 0.00256 |
-| 12   | 0.00245 | 0.00237 | 0.00233 |
-| 13   | 0.00276 | 0.00237 | 0.00231 |
-| 14   | 0.00260 | 0.00239 | 0.00237 |
-| 15   | 0.00226 | 0.00242 | 0.00233 |
-| 16   | 0.00229 | 0.00249 | 0.00232 |
-| 17   | 0.00231 | 0.00239 | 0.00254 |
-| 18   | 0.00234 | 0.00436 | 0.00274 |
-| 19   | 0.00276 | 0.00467 | 0.00338 |
-| 20   | 0.00258 | 0.00895 | 0.00268 |
-| 21   | 0.00251 | 0.01675 | 0.00331 |
-| 22   | 0.00277 | 0.03272 | 0.00301 |
-| 23   | 0.00320 | 0.06526 | 0.00303 |
-| 24   | 0.00266 | 0.11526 | 0.00330 |
-| 25   | 0.00257 | 0.16509 | 0.00283 |
-| 26   | 0.00274 | 0.31644 | 0.00357 |
-| 27   | 0.00291 | 0.56648 | 0.00307 |
-| 28   | 0.00327 | 1.11818 | 0.00310 |
-| 29   | 0.00315 | 2.22168 | 0.00330 |
-| 30   | 0.00273 | 4.47703 | 0.00326 |
-| 31   | 0.00289 | 8.73789 | 0.00339 |
-| 32   | 0.00318 | 17.51031 | 0.00326 |
-| 33   | 0.00301 | 35.20920 | 0.00334 |
-| 34   | 0.00306 |    -    | 0.00333 |
-| 35   | 0.00275 |    -    | 0.00304 |
-| 36   | 0.00296 |    -    | 0.00303 |
-| 37   | 0.00321 |    -    | 0.00362 |
-| 38   | 0.00301 |    -    | 0.00258 |
-| 39   | 0.00243 |    -    | 0.00320 |
-| 40   | 0.00297 |    -    | 0.00608 |
-
-
-### Modify Script?
-Simply due to the speed differences, it is hard to see the speed growth of the dynamic programming version and iterative version due to the extreme cost of the recursive version. You may want to modify the python, so only the dynamic programming and iterative version runs to generate a much larger dataset. 
-
-Either way, the goal is to experiment and see the differences in speed. 
-
-
-👉🏽 **Task**: Use either the provided CSV data, or data you generate to build a line graph comparing the various speeds (note you  may need to build separate line graphs for a better comparison). Discuss with your partner. 
-
-
-## Thinking Deeper
-These are not the most efficient implementations! If you have time, study different ways you can improve the implementation
-of pascals triangle. 
 
 ## 📚 Resources
-* [Geek for Geeks Pascal Triangle](https://www.geeksforgeeks.org/pascal-triangle/)
-* [Dynamic Programming Examples (python)](https://www.makeuseof.com/dynamic-programming-tutorial/)
-* [Memoization A "complete" tutorial](https://www.geeksforgeeks.org/what-is-memoization-a-complete-tutorial/)
-* [Leet Code - Dynamic Programming](https://leetcode.com/tag/dynamic-programming/) -note: sort for easy ones first...
+
+* [strstr() tutorial](https://www.tutorialspoint.com/c_standard_library/c_function_strstr.htm)
+* [CString reference](https://cplusplus.com/reference/cstring/)
+* [Compiler Explorer](https://godbolt.org/) - really neat tool to explore compiled code
 
 
-[memoization]: https://en.wikipedia.org/wiki/Memoization
-[pure function]: https://en.wikipedia.org/wiki/Pure_function
-[Pascal's Triangle - Numberphile]: https://www.youtube.com/watch?v=0iMtlus-afo
-[Pascal's Triangle]: https://en.wikipedia.org/wiki/Pascal%27s_triangle
-[Triangle Animated]: https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif
+[simple.c]: simple.c
+[simple.s]: simple.s
+[estimator.c]: estimator.c
