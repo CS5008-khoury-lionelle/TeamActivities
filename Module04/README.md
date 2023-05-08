@@ -43,8 +43,6 @@ int main(int argc, char** argv){
 ## Reading a File
 If you followed Mike Shaw's video, you will have a good idea of how to read a file. This follows a similar guideline. 
 
-👉🏽 **Your Task**  Read the file passed in via program arguments, and print out its contents to the screen 
-
 The standard c library stdlib provides a number of File access functions.  If you wanted to open a file using the first 
 program argument, you could do it the following way
 
@@ -81,10 +79,10 @@ free(line); // don't forget to free memory!
 fclose(input); // don't forget to close a file!
 ```
 
+👉🏽 **Your Task**  Read the file passed in via program arguments, and print out its contents to the screen 
 
 
-
-## Generating Assembly Files (10 Minutes)
+## Generating Assembly Files 
 
 Both gcc and clang allow you to generate the assembly file for their code.  Looking at [simple.c], we see a program that
 simply adds two numbers, and then ends. However, [simple.s] is the assembly built from this program. This was done using the following option.
@@ -99,66 +97,63 @@ To help you better understand, you should write a simple/small C program. After 
 * What are some of the assembly commands generated? 
 * Was there more than you expected? 
 * Can you find the functions you wrote easily?
+* If you run `clang -S shift.c`. Do you notice anything unusual about the generated assembly? (alright if you don't.. will cover it below)
 
-## Writing Estimator
+## Finishing Estimator
 
-Go ahead and use [estimator.c] for your template. We will slowly work through building the estimator. 
+Go ahead and use [estimator.c] for your template. You will notice the skeleton is implemented, but you will need to complete the `run_program` function
 
 
+👉🏽 **Your Task**  Go ahead and finish the `run_program` function.
 
-👉🏽 **Your Task**  Go ahead and add reading the first program argument (if it exists to estimator)
 
-#### Discussion
-* Why would c need two values for program arguments? 
-
-### Reading The File (15 minutes)
-I
-
-Using the outline above, add to your estimator.c to print out the contents of the file based on the file name passed into args. This is always a good task to accomplish before working on files. Can you simply dump the contents to the screen! 
-
-### Now The Estimator (60 minutes)
-
-You can read the file! That is half the battle. Now we are ready to define the estimator specifications. 
-
-* Your program should output counts for ADD, SUB, MUL, DIV, MOV, LEA, PUSH, POP, RET, SHL, and SAR. 
-* Your program should figure out the cycles for each command. You can use the following chart to match cycles on a per command basis (hint: these are already added as defines in your template)
-  * ADD counts as 1 cycle
-  * SUB counts as 1 cycle
-  * MUL counts as 3 cycles
-  * DIV counts as 24 cycles
-  * MOV counts as 1 cycle
-  * LEA counts as 3 cycles
-  * PUSH counts as 1 cycle
-  * POP counts as 1 cycle
-  * RET counts as 1 cycle
-  * SHL counts as 1 cycle
-  * SAR counts as 1 cycle
-  * For example, is MUL shows up twice, it will say MUL 2 and then later 6 cycles (2 * 3). Or as code:
-    ```c
-    total_mul_cycles = mul_counter * MUL_CYCLES
-    ```
-* For the sake of simplicity, your tools should treat all instructions of the same type as equivalent using the same cycle count for all of the different forms. For instance, ADD would include ADDQ, ADDB, ADDL, etc. and count them all as 1 cycle.
-IMUL is equivalent to MUL, IDIV is equivalent to DIV.
-* You may ignore other assembly instructions (i.e. incq, decq) that are not in the above list.
-* We have implemented some of the code (as this is only a one hour lab), you should complete the missing functions. 
-
-### Implementation Hints
-* This will involve counters for each command (or an array, but keep it simple / easy at first!) 
-* It will require a very large if/else statement. 
-* Your `if/else if`  will also need to consider `or`, for example "MOV" or "mov" is valid for mov. 
-* `strstr()` helps you find the 'needle in the haystack' of two strings. You will want to use this!
-* First only make your estimator work with a single command (add for example), then work on other commands. 
-* Loop through the file counting first. Then worry about printing at the end. 
-
-As always remember to implement incrementally. 
-
-#### Discussion
+### Discussion
 * What were some challenges?
 * What do the cycles tell you about the difficulty of the process for the computer?
 * Why does this/knowing assembly matter?
   * This right here is the hard one. It can be difficult to see the forest through the trees, so discuss some reasons that come to mind and share them with the class at the end. 
 * If you have time, use the Godbolt tool (linked below) to try equivalent programs in various languages. 
   * How does python and c differ, even if it the code is "equivalent"?
+
+## Diving Into Optimization
+
+As a quick reminder, there is a the `shift` operators in most languages. The left and right shift operators are `<<` and `>>` respectively. These operators shift the bits of a number left or right. For example, `5 << 1` is `10` and `5 >> 1` is `2`.
+
+Go ahead and compile shift.c, and run the program. For example
+
+```bash
+clang shift.c -o shift.out
+./shift.out 10
+```
+
+Notice all three statements are equivalent! However, if you look at the assembly generated, you will notice that the first two are the same, but the third is different. Why do you think this is? Compilers will try to optimize their code, and since the cycle costs of MUL is more than SHL, it will try to use SHL when possible.
+
+:star: Go ahead and run your estimator on shift.s. Take a look at the total cycle cost. :star:
+
+!Important! - before this next step, you will want to backup your shift.s file. You can do this by running the following command
+
+```bash
+cp shift.s shift.s.bak
+```
+
+### Optimization Level 3
+A good compiler will go even farther. Try the following compile command.
+
+```bash
+clang shift.c -S -O3
+```
+
+That is the letter O, not the number 0. This will compile the code with the highest level of optimization. Now look at the assembly generated. Notice how it is different than the previous assembly generated.
+
+:star: Go ahead and run your estimator on shift.s. Take a look at the total cycle cost. :star:
+
+### Discussion
+* How did the total cycle costs of the program change? When setting up this team activity, it was a substantial difference! 
+
+
+## Leet Code Challenge Problem Practice
+
+As per our standard end of the team activity - go to the Module 03 challenge problems, and as a group pick a couple to work on. Discuss your solutions. 
 
 
 ## 📚 Resources

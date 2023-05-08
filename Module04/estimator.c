@@ -78,32 +78,8 @@ void print_info(int* counts) {
  * Finally, we print the info for each instruction using print_info.
 */
 void run_program(char* file_name) {
-    int * counts = calloc(11, sizeof(int));
+     // student TODO
 
-    FILE *fp = fopen(file_name, "r");
-    if (fp == NULL)
-    {
-        printf("Error opening file\n");
-        exit(1);
-    }
-    char* line = malloc(BUFF_SIZE * sizeof(char));
-    while (fgets(line, BUFF_SIZE, fp) != NULL)
-    {
-        convertToUpperCase(line);
-        for (int i = 0; i < 11; i++)
-        {
-            if (contains(line, instructions[i]))
-            {
-                counts[i]++;
-            }
-        }
-    } 
-
-    print_info(counts);
-
-    free(line);
-    free(counts);
-    fclose(fp);
 }
 
 
