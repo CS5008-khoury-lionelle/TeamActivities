@@ -1,100 +1,46 @@
-# Lab Analyzing Assembly
+# Team Activity File Reading and Analyzing Assembly
 
 This lab seeks to help you understand File I/O in c, along with seeing the basic assembly that is generated for programs before it goes into a binary form.
 
-👉🏽 **Your Task** will be to write a small C program, that reads an assembly file, and prints out the number of instructions in that file and estimated  cycle count to run the program. 
+For this team activity, you will have multiple small programs to write. The goals for this team activity are as follows:
+* Better understand command line program arguments
+* Better understand reading files in c
+* Better understand the assembly generated for a program, and the cost of various commands
 
-For example, assume  assembly.s has the following code:
-```
-MOVQ a, %rax
-MOVQ b, %rbx
-ADDQ %rbx, %rax
-IMULQ %rbx
-MOVQ %rax, c
-```
+## :star: Working in Teams :star:
+When working in teams, remember do not let one person do all the work. Make sure to work together, and ask questions. It is also better if different people program, and you all take turns programming for various team assignments. 
 
-Running your program `> estimator.out assembly.s` would print the following to the screen.
 
-```
-ADD 1
-MOV 3
-MUL 1
 
-Total Instructions = 5
-Total Cycles = 7
-```
-MUL, IMULQ are the same thing, along with MOVQ and MOV, etc. 
+## Program Arguments
+Programs, especially command line programs, have arguments that are passed into them, and based on those arguments it changes how the program runs.  For example, 
 
-Let's get started! 
+* `ls -l` on the linux / macOS command line will list the files in the current directory in a long format. 
+* `code my_file.c` will open the file my_file.c in Visual Studio Code.
+* `gcc -g -Wall my_file.c -o my_file.out` will compile the file my_file.c into an executable called my_file.out
 
-## Paired Programming
-Make sure to partner up (or group up). One person should be coding, while the other person is directing. Make sure to ask each other questions, along with the TAs as you work. 
+Everything after the program name, is an argument!  
 
-After you determine the 'driver', have them clone this repo to their own computer. 
-
-## Generating Assembly Files (10 Minutes)
-
-Both gcc and clang allow you to generate the assembly file for their code.  Looking at [simple.c], we see a program that
-simply adds two numbers, and then ends. However, [simple.s] is the assembly built from this program. This was done using the following option.
-
-> clang -S simple.c
-
-👉🏽 **Your Task** Write a **simple** c program, and generate the assembly file.
-
-To help you better understand, you should write a simple/small C program. After you have completed the program, run the compiler with the `-S` option, to see the assembly generated. 
-
-### Discussion
-* What are some of the assembly commands generated? 
-* Was there more than you expected? 
-* Can you find the functions you wrote easily?
-
-## Writing Estimator
-
-Go ahead and use [estimator.c] for your template. We will slowly work through building the estimator. 
-
-### Program Arguments (5 minutes)
-
-For the program to work, you will want to handle a single program argument. In C, the program arguments are passed in as parameters to your main function. For example, the following program will print out every program argument.
+In c programming, you will notice the main function as two optional arguments
 
 ```c
-// Compile with: gcc -g -Wall args.c -o args.out
-// Try running with:
-//          - ./args.out
-//          - ./args.out somefile.c
-//          - ./args.out argv1 argv2
-#include <stdio.h>
-
-// The parameters to the main function are read in
-// when you execute your program on the terminal.
-// argc: is the argument count
-// argv: is a 'variable' number of arguments provided
-//
-// This program shows how to iterate through all of the arguments
 int main(int argc, char** argv){
-
-    printf("argc is the argument count: %d\n",argc);
-
-    // This loop will print out all of the arguments
-    for(int i=0; i < argc; i++){
-        printf("argv[%d] is %s\n",i,argv[i]);
-    }
-
-    // Then you can use the argv's as needed.
-    // example: If argv[1] is suppose to be a particular (like the filename), 
-    //          you can make use of it.
-    //         So your next step would be to use FILE* input = fopen(argv[1],"r");
-    //        Then read every line in that file, and 'parse' the first few characters
-
-    return 0;
+    // code goes here
 }
 ```
 
-👉🏽 **Your Task**  Go ahead and add reading the first program argument (if it exists to estimator)
+* argc - is the argument count. This is the number of arguments passed into the program. It is always at least 1
+* argv - is an array of strings. Each string is an argument passed into the program. The first argument is always the program name.
 
-#### Discussion
-* Why would c need two values for program arguments? 
 
-### Reading The File (15 minutes)
+👉🏽 **Your Task**  Write a program that prints out all of the arguments passed into it. Make it so at least one argument is passed into it. 
+
+### Discussion
+* What is the first argument passed into the program?
+* Why would having program arguments be useful for programs?
+
+
+## Reading a File
 If you followed Mike Shaw's video, you will have a good idea of how to read a file. This follows a similar guideline. 
 
 👉🏽 **Your Task**  Read the file passed in via program arguments, and print out its contents to the screen 
@@ -125,13 +71,48 @@ int r;
 
 
 FILE *input = fopen(argv[1],"r");
-r = fscanf(input, "%s", buff);
-
-while (r != EOF) {
-   r = fscanf(input, "%s", buff);  // grab the next line and store into buff
+char* line = malloc(BUFF_SIZE * sizeof(char));
+while (fgets(line, BUFF_SIZE, input) != NULL) {
+    // do the thing, line now has the line from input
+    
 }
-close(input); // don't forget to close a file!
+
+free(line); // don't forget to free memory!
+fclose(input); // don't forget to close a file!
 ```
+
+
+
+
+## Generating Assembly Files (10 Minutes)
+
+Both gcc and clang allow you to generate the assembly file for their code.  Looking at [simple.c], we see a program that
+simply adds two numbers, and then ends. However, [simple.s] is the assembly built from this program. This was done using the following option.
+
+> clang -S simple.c
+
+👉🏽 **Your Task** Write a **simple** c program, and generate the assembly file.
+
+To help you better understand, you should write a simple/small C program. After you have completed the program, run the compiler with the `-S` option, to see the assembly generated. 
+
+### Discussion
+* What are some of the assembly commands generated? 
+* Was there more than you expected? 
+* Can you find the functions you wrote easily?
+
+## Writing Estimator
+
+Go ahead and use [estimator.c] for your template. We will slowly work through building the estimator. 
+
+
+
+👉🏽 **Your Task**  Go ahead and add reading the first program argument (if it exists to estimator)
+
+#### Discussion
+* Why would c need two values for program arguments? 
+
+### Reading The File (15 minutes)
+I
 
 Using the outline above, add to your estimator.c to print out the contents of the file based on the file name passed into args. This is always a good task to accomplish before working on files. Can you simply dump the contents to the screen! 
 
