@@ -139,7 +139,7 @@ Using the outline above, add to your estimator.c to print out the contents of th
 
 You can read the file! That is half the battle. Now we are ready to define the estimator specifications. 
 
-* Your program should output counts for ADD, SUB, MUL, DIV, MOV, LEA, PUSH, POP, and RET. 
+* Your program should output counts for ADD, SUB, MUL, DIV, MOV, LEA, PUSH, POP, RET, SHL, and SAR. 
 * Your program should figure out the cycles for each command. You can use the following chart to match cycles on a per command basis (hint: these are already added as defines in your template)
   * ADD counts as 1 cycle
   * SUB counts as 1 cycle
@@ -150,6 +150,8 @@ You can read the file! That is half the battle. Now we are ready to define the e
   * PUSH counts as 1 cycle
   * POP counts as 1 cycle
   * RET counts as 1 cycle
+  * SHL counts as 1 cycle
+  * SAR counts as 1 cycle
   * For example, is MUL shows up twice, it will say MUL 2 and then later 6 cycles (2 * 3). Or as code:
     ```c
     total_mul_cycles = mul_counter * MUL_CYCLES
@@ -157,6 +159,7 @@ You can read the file! That is half the battle. Now we are ready to define the e
 * For the sake of simplicity, your tools should treat all instructions of the same type as equivalent using the same cycle count for all of the different forms. For instance, ADD would include ADDQ, ADDB, ADDL, etc. and count them all as 1 cycle.
 IMUL is equivalent to MUL, IDIV is equivalent to DIV.
 * You may ignore other assembly instructions (i.e. incq, decq) that are not in the above list.
+* We have implemented some of the code (as this is only a one hour lab), you should complete the missing functions. 
 
 ### Implementation Hints
 * This will involve counters for each command (or an array, but keep it simple / easy at first!) 
@@ -182,6 +185,7 @@ As always remember to implement incrementally.
 * [strstr() tutorial](https://www.tutorialspoint.com/c_standard_library/c_function_strstr.htm)
 * [CString reference](https://cplusplus.com/reference/cstring/)
 * [Compiler Explorer](https://godbolt.org/) - really neat tool to explore compiled code
+* [Guide to Cycle Costs](https://www.agner.org/optimize/instruction_tables.pdf)
 
 
 [simple.c]: simple.c
