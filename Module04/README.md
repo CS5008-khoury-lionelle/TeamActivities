@@ -50,23 +50,8 @@ program argument, you could do it the following way
 FILE *input = fopen(argv[1],"r");
 ```
 
-Now if you wanted to read a line of the file, you would use the following
-
-```c
-char buff[BUFF_SIZE];  // notice BUFF_SIZE is just a number declared at the top
-int r;
-
-r = fscanf(input, "%s", buff);
-```
-
-The above says read the line from input and store it into the buff. If you are at the end of the file, r will equal `EOF`.
-
-As such, to loop through a file, we can use the following:
-
 ```c
 char buff[BUFF_SIZE]; 
-int r;
-
 
 FILE *input = fopen(argv[1],"r");
 char* line = malloc(BUFF_SIZE * sizeof(char));
@@ -79,7 +64,7 @@ free(line); // don't forget to free memory!
 fclose(input); // don't forget to close a file!
 ```
 
-👉🏽 **Your Task**  Read the file passed in via program arguments, and print out its contents to the screen 
+👉🏽 **Your Task**  Read the file with the name passed in via program arguments, and print out its contents to the screen 
 
 
 ## Generating Assembly Files 
@@ -89,17 +74,16 @@ simply adds two numbers, and then ends. However, [simple.s] is the assembly buil
 
 > clang -S simple.c
 
-👉🏽 **Your Task** Write a **simple** c program, and generate the assembly file.
+👉🏽 **Your Task** Generate the assembly code for the programs you just wrote by using the -S option.
 
-To help you better understand, you should write a simple/small C program. After you have completed the program, run the compiler with the `-S` option, to see the assembly generated. 
 
 ### Discussion
 * What are some of the assembly commands generated? 
 * Was there more than you expected? 
-* Can you find the functions you wrote easily?
 * If you run `clang -S shift.c`. Do you notice anything unusual about the generated assembly? (alright if you don't.. will cover it below)
 
 ## Finishing Estimator
+Estimator is a program that helps estimate the total number of processor cycles for a program to run. This can be helpful when comparing the costs of various operations in your program (though it is very loosely done).
 
 Go ahead and use [estimator.c] for your template. You will notice the skeleton is implemented, but you will need to complete the `run_program` function
 
@@ -117,7 +101,7 @@ Go ahead and use [estimator.c] for your template. You will notice the skeleton i
 
 ## Diving Into Optimization
 
-As a quick reminder, there is a the `shift` operators in most languages. The left and right shift operators are `<<` and `>>` respectively. These operators shift the bits of a number left or right. For example, `5 << 1` is `10` and `5 >> 1` is `2`.
+As a quick reminder, there is a the `shift` operators in most languages. The left and right shift operators are `<<` and `>>` respectively. These operators shift the bits of a number left or right. For example, `5 << 1` is `10` and `10 >> 1` is `5`.
 
 Go ahead and compile shift.c, and run the program. For example
 
@@ -130,7 +114,7 @@ Notice all three statements are equivalent! However, if you look at the assembly
 
 :star: Go ahead and run your estimator on shift.s. Take a look at the total cycle cost. :star:
 
-!Important! - before this next step, you will want to backup your shift.s file. You can do this by running the following command
+Important - before this next step, you will want to backup your shift.s file. You can do this by running the following command
 
 ```bash
 cp shift.s shift.s.bak
