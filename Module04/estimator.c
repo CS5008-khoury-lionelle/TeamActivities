@@ -34,14 +34,11 @@ void convertToUpperCase(char *str)
 
 
 /**
- * Looks for a substring in a string.
- *   key - the string to look for
- *   str - the string to look in
- * 
+ * Looks for a substring in a string. 
 */
-bool contains(char *key, char *str)
+bool contains(char *str, char *substr)
 {
-    if (strstr(key, str) != NULL)
+    if (strstr(str, substr) != NULL)
     {
         return true;
     }
@@ -104,7 +101,9 @@ void run_program(char* file_name) {
 
     print_info(counts);
 
+    free(line);
     free(counts);
+    fclose(fp);
 }
 
 
