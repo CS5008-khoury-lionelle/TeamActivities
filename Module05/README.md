@@ -1,7 +1,9 @@
-# Lab Sorting
+# Team Activity - Sorting (Part 1)
 
 
-For this lab/workshop you will be writing a simple bubble sort, while discussing about sorts and BigO. A bubble sort is one of three sorts we will write this module, with the other two also being quadratic ($O(n^2)$) sorts: insertion and selection.  While the code during this workshop will be done as pairs/groups, you will use the code from your lab directly in your weekly assignment. 
+For this activity you will be writing a simple bubble sort, while discussing about sorts and BigO. A bubble sort is one of three sorts we will write this module, with the other two also being quadratic ($O(n^2)$) sorts: insertion and selection.  While the code during this workshop will be done as a group, you will use the code from your lab directly in your weekly assignment. 
+
+Sorts are often openly available online, so the real key over the next two weeks is understanding which sort to use in which situation.
 
 ## Bubble Sort
 Bubble Sort is one of the oldest sorts, and if you line people up asking them to sort by their names, they will often default to a bubble sort. 
@@ -9,7 +11,7 @@ Bubble Sort is one of the oldest sorts, and if you line people up asking them to
 The idea behind a bubble sort is that you compare two side by side numbers, swapping them if the right is lower than the left. It is also worth noting the bubble sort is an in place sort, meaning you can sort the array modifying it directly. 
 
 ### 👉🏽 **Task**  Practice
-With a partner, write out 5 values, then write out what the array looks like after 1 complete pass. 
+With your group, take turns writing out 5 values, then write out what the array looks like after 1 complete pass. 
 
 For example:
 ```text
@@ -79,13 +81,14 @@ The idea is to take two values and swap, so if a comes in with 20, and b comes i
 Go ahead and work on this as a group. 
 
 ### Writing Bubble Sort (40 Minutes)
-While bubble sort is well documented you should try writing it, talking it through with your partners. A bubble sort will be two nested four loops to be success. One that goes through the entire array, and one that is performing the swaps on each number. The print should be setup in the 'outer-loop' so you can see what the array looks like after each pass. 
+While bubble sort is well documented you should try writing it, talking it through with your partners. A bubble sort will be two nested for loops. One that goes through the entire array, and one that is performing the swaps on each number. The print should be setup in the 'outer-loop' so you can see what the array looks like after each pass. Don't forget to put `if(print)` before your print, or your code may slow down considerably when you are testing large arrays. 
+
 
 
 ## Deeper Understanding
 As you write the bubble sort, make sure to comment on each line what it is doing and why. Bubble sore is well documented, so it is more important that you understand the why than coming up with a creative solution. 
 
-1. Bubble sort is $O(n^2)$. Looking at the algorithm can you explain to your partner why that is?
+1. Bubble sort is $O(n^2)$. Looking at the algorithm can you explain to your group why that is?
 2. Can you come up with an array that will generate the "worst case"? 
 3. Can you come up with an array that will generate the "best case"?
    * By default, the best case is the same, but can you optimize it?
@@ -105,13 +108,24 @@ For example:
 | 1000 | 5 |  0.1 |
 | 5000 | ... | ... |
 
+We suggest you run it *without* print, as print will slow down the code. So for example, your run code would look like:
 
+```text
+> ./tester.out 0 10000
+> ./tester.out 1 10000
+```
+
+You will notice on larger numbers, the bubble starts to really slow down, while the qsort (quick sort) doesn't.  Have one member store the runs of the output into a spreadsheet, and then graph the results between the two sorts. 
 
 ## Homework Prep
-With your partner, talk about the differences between Insertion, Bubble, and Selection sorts. Try to work them out on paper first!
+With your group, talk about the differences between Insertion, Bubble, and Selection sorts. Try to work them out on paper first!
 
-## Learning Activity
-If you have time, both open up your learning activities for the module. Work on them, discussing the answers. This is intentional, as they can be redone, and figuring out how to calculate BigO will help with the homework. 
+Work each one out on paper - similar to how you did for the 5 value array above for bubble sort. Make you use the [visualize] tool to better understand!
+
+
+## Leet Code Practice
+
+Lastly, work on modules 04 leet code practice. Everyone pick a different problem, and take turns explaining your solution *as* you work through the code (as time allows). This is called "live coding" and often required in technical interviews. Moving forward, we would like you emphasize the explaining of code as you work through it, to better prepare you for technical interviews.
 
 
 ## 📚 Resources
