@@ -1,8 +1,8 @@
-# Lab - Sorting Part 2: Merge Sort
+# Team Activity - Sorting Part 2: Merge Sort
 
-> This lab builds on your Homework 05 and Lab - Sorting. While we have provided template files here, you will want to merge (pun intended) this code into your Homework 05.  You will still be working with **pair / group programming**, so please make sure to give credit on who worked on this code with you. 
+> This activity builds on your Homework 05 and Lab - Sorting. While we have provided template files here, you will want to merge (pun intended) this code into your Homework 05.  Please make sure to give credit on who worked on this code with you. As a reminder, the stuff done in team activities are the team's work, but your other homework requirements are your *own* (don't plagiarize!)
 
-👉🏽 **Task**: You will implement the `merge` and the `mergeSort` function in [sorts.h](sorts.h). 
+👉🏽 **Task**: As a group you will implement the `merge` and the `mergeSort` function in [sorts.h](sorts.h). 
 
 Merge sort is a [divide and conquer algorithm] that was invented by [John von Neumann] in 1945. Merge sort has a worst-case time complexity being $Ο(n\log n)$. Of our sorting algorithms that we have seen, this is the best overall time complexity.
 
@@ -101,12 +101,18 @@ In the end, you end up with 3 while loops (not nested!).
 
 
 ### Discuss and Build
-Work together with your partners to build the merge function. While the code is provided online, it is important to understand each step, so take piece of paper out and draw samples.  Can you comment in the code with your understanding?
+Work together with your partners to build the merge function. While the code is provided online, it is important to understand each step, so take piece of paper out and draw samples.  Comment in the code with your understanding.
+
+> **Challenging**:  
+> The merge sort is a challenging algorithm, that looks simple after it is completed. It is why we are doing it in a group, and you are free to use online resources if you get stuck. Just make sure you **understand** what is going on. 
+
+## Other Sorts?
+Take time to search additional sorts online (there are a *ton* of them). Each person should find a sort, and describe to the group what situations it is best used for. Even better if you can find a visualization for that sort. 
 
 
-## Testing
-Now take the time to start running tests for your Report.md for Homework 05. Mergesort is needed to fill out the table, and help you answer the questions. You can use the time to also discuss your results with others. 
+## Leet Code Practice
 
+Lastly, work on modules 05 leet code practice. Everyone pick a different problem, and take turns explaining your solution *as* you work through the code (as time allows). This is called "live coding" and often required in technical interviews. Moving forward, we would like you to emphasize the explaining of code as you work through it, to better prepare you for technical interviews.
 
 ## 📚 Resources
 * [Merge Sort on Khan](https://www.khanacademy.org/computing/computer-science/algorithms/merge-sort/a/divide-and-conquer-algorithms)
