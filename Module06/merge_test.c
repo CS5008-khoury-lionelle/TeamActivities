@@ -1,5 +1,5 @@
-// Compile with: clang -Wall insertion_test.c -o insertion_test.out
-// Run with: ./insertion_test.out
+// Compile with: clang -Wall merge_test.c -o merge_test.out
+// Run with: ./merge_test.out
 
 #include <stdio.h>  // Include file for standard input/output
 #include <stdlib.h> // so we can use atoi()
