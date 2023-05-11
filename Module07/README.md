@@ -1,6 +1,6 @@
 # Dynamic Programming
 
-In this lab we will explore dynamic programming. It is a fancy term, often taught in overly mathematical ways to say:
+In this activity we will explore dynamic programming. It is a fancy term, often taught in overly mathematical ways to say:
 
 > If we already calculated an answer, save it, so we don't have to calculate it again!
 
@@ -15,9 +15,16 @@ In this lab, you will explore adding [memorization] to Pascal's Triangle and exp
 in speed. This will help you practice for the midterm project. 
 
 
+## Dynamic Programming Warm Up Discussion
+
+As a team, find three to four algorithms that use dynamic programming. You do not need to implement them, or even fully understand them, but you should work together to understand how dynamic programming is being used to help with the algorithm. 
+
+Now that you are thinking about what is dynamic programming, it is time to work together on a sample problem.
+
+
 ## Pascal's Triangle
 
-Here is a cool video for [Pascal's Triangle] (that hopefully you watched before this lab): [Pascal's Triangle - Numberphile]
+Here is a cool video for [Pascal's Triangle] (that hopefully you watched before this team activity): [Pascal's Triangle - Numberphile]
 
 The idea behind Pascal's triangle is that starting 1 for spot 0,0 (first row, single element), each following row is sum of two numbers directly above it. All outer edges are always 1. 
 
@@ -112,7 +119,7 @@ Both will run relatively quickly, but if you increase your number to ~35, you wi
 ### Dynamic Programming
 👉🏽 **Task**: Use [pascal.c] to write a dynamic programming variation of how to solve Pascal's Triangle for the Nth row.
 
-Take a moment to discuss and describe dynamic programming in your own words to your partner.  What are some things you are going to need to write a dynamic version of pascal's triangle. 
+Take a moment to discuss and describe dynamic programming in your own words to your team.  What are some things you are going to need to write a dynamic version of pascal's triangle. 
 
 1. Make sure you declare a multidimensional array. 
 2. Then for each value of  `[n][k]` store that answer in the table, if it isn't already in the table.   
@@ -183,6 +190,10 @@ Either way, the goal is to experiment and see the differences in speed.
 ## Thinking Deeper
 These are not the most efficient implementations! If you have time, study different ways you can improve the implementation
 of pascals triangle. 
+
+
+## Leet Code Practice
+Take time practicing some of the past modules leet code. While you may not have time for everyone to do this, have a couple people practice "live coding". Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. I recommend that you setup a rotation of people to practice this skill within your team, ideally a couple every week. The other teams members can offer support, and then do a code review after a solution is generated. 
 
 ## 📚 Resources
 * [Geek for Geeks Pascal Triangle](https://www.geeksforgeeks.org/pascal-triangle/)
