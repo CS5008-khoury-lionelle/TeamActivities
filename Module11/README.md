@@ -52,7 +52,7 @@ flowchart TD
 
 👉🏽 **Task** 👈🏽: Modify the code in [adj_fun.c](adj_fun.c) to print out the graph as an adjacency matrix using `DIRECTED_ONE_DIRECTION`, `DIRECTED_UNBALANCED`, and `UNDIRECTED`. You can do this by changing the `type` variable in the `main` function. 
 
-**FOR EACH** of the types, draw the graph on a piece of paper. Talk it through with your partner. 
+**FOR EACH** of the types, draw the graph on a piece of paper. Talk it through with your group.
 
 
 ## 📝 Converters
