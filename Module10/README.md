@@ -135,7 +135,7 @@ Take time practicing some of the past modules leet code. While you may not have 
 
 ### Makefile?
 
-You will notice for this lab, we added a [Makefile](Makefile). A Makefile is a file that contains a set of instructions for the make program to execute. The make program is a program that is used to automate the build process of a program. In this case, we are using it to automate the compilation of our program. This helps when you have multiple files, and you want to compile them all at once. If you have used gradle or maven in java, this is similar to those tools (arguably those tools are inspired by `make`).
+You will notice for this team activity, we added a [Makefile](Makefile). A Makefile is a file that contains a set of instructions for the make program to execute. The make program is a program that is used to automate the build process of a program. In this case, we are using it to automate the compilation of our program. This helps when you have multiple files, and you want to compile them all at once. If you have used gradle or maven in java, this is similar to those tools (arguably those tools are inspired by `make`).
 
 If you view the file, you will see comments on each line for what it does. Inside of linux, you can simply type "make" in the same
 directory as the Makefile, and it will follow those rules. You can use `make clean` to remove the executable and object files. Right now the make files seems simple, but we will cover it a bit more in depth as we will have a few assignments in the future
