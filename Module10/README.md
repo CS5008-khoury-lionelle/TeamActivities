@@ -1,17 +1,20 @@
-# Lab: Breadth First Search and Depth First Search on Trees
+# Team Activity: Breadth First Search and Depth First Search on Trees
 
-In this lab you will explore using [Breadth First Search] and [Depth First Search] on a tree structure. 
+In this team activity you will explore using [Breadth First Search] and [Depth First Search] on a tree structure. 
 
 
 ## Code Walkthrough
-With your partner, have one of you walk through the code in [tree.h](tree.h) & [tree.c](tree.c). You should be able to answer the following questions:
+In your group, review the code in [tree.h](tree.h) & [tree.c](tree.c). Explain to each other the various lines.
+You should be able to answer the following questions:
 
 * What is the purpose of the struct?
 * What is the difference between addNode and addNodeBreadthFirst?
 * Why would we need to remove `\n` in `read_file_into_tree`?
 * How are we adding nodes to a tree? Given the file [letters.txt](letters.txt), how does the tree look like?
   
-The other partner should walk through [printer.c](printer.c). You should be able to answer the following questions:
+Now, review the code in [printer.c](printer.c). Explain to each other the various lines.
+You should be able to answer the following questions:
+
 * Why would be need a queue for a breadth first search? (it may help to draw it out)
 * Would we need a queue for the Depth First Prints? Why or why not?
 
@@ -44,6 +47,7 @@ of the visits, and how this would look on the tree.
 Postorder is a depth first search, where the left subtree is visited first, then the right subtree, then the root.
 Postorder would be: `D, E, B, F, G, C, A`. Take a moment to draw out the order based on the tree node traversal.
 
+
 ### Depth First Search: Inorder
 Inorder is a depth first search, where the left subtree is visited first, then the root, then the right subtree.
 Inorder would be: `D, B, E, A, F, C, G`. Take a moment to draw out the order based on the tree node traversal.
@@ -51,7 +55,7 @@ Inorder would be: `D, B, E, A, F, C, G`. Take a moment to draw out the order bas
 
 ## 👉🏽 **Task** 👈🏽 - Write DFS Prints 
 
-In [printer.c](printer.c), you will find a function `print_bfs` that prints the tree in a breadth first manner. Your task is to write the `print_dfs_preorder`, `print_dfs_postorder`, and `print_dfs_inorder` functions. These functions are much simpler than the `print_bfs` function. Also, they are recursive functions. It is recommended you get one of the functions working first, as the other other two are very similar with only a change on where you put the print statement.
+In [printer.c](printer.c), you will find a function `print_bfs` that prints the tree in a breadth first manner. Your task is to write the `print_dfs_preorder`, `print_dfs_postorder`, and `print_dfs_inorder` functions. These functions are much simpler than the `print_bfs` function. Also, they are recursive functions. It is recommended you get one of the functions working first, as the other two are very similar with only a change on where you put the print statement.
 
 ### Testing Print
 To test your breadth first print, you can run the following commands:
@@ -86,6 +90,7 @@ diff elf_names_preorder.txt my_preorder.txt
 
 By default if the files are exactly the same, you will get no output. If there is a difference, you will get a line by line comparison of the two files. You can add a flag to tell it when the files are exactly the same, by adding the -s flag. 
 
+
 ```console
 diff -s elf_names_preorder.txt my_preorder.txt
 ```
@@ -94,7 +99,7 @@ Try that with each of the ordering types.
 
 ## Discussion  💬
 
-With your partners, discuss the following questions:
+In your group, discuss the following questions:
 
 * What is the difference between a breadth first search and a depth first search?
 * What tasks are suited for a breadth first search?
@@ -110,10 +115,13 @@ Also for the tree:
 
 
 ## Conclusion
-In this lab, we have learned about the different types of search algorithms, and how they can be used to traverse a tree. We have also learned about the different types of tree traversals, and how they can be used to print out the tree in different orders.
+In this team activity, we have learned about the different types of search algorithms, and how they can be used to traverse a tree. We have also learned about the different types of tree traversals, and how they can be used to print out the tree in different orders.
 
 We will come back to the traversal types when we explore graphs, which are a more complex data structure than trees but the fundamentals are the same. Searching is used throughout computer science, and knowing your data and which search is best
 often helps with the efficiency of your program. For a Binary Search Tree (your homework), that is almost exclusively depth first traversal of your code, as you always know "which direction" to traverse until you find the node you are looking for.
+
+## Leet Code Practice
+Take time practicing some of the past modules leet code. While you may not have time for everyone to do this, have a couple people practice "live coding". Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. I recommend that you setup a rotation of people to practice this skill within your team, ideally a couple every week. The other teams members can offer support, and then do a code review after a solution is generated. Discuss pros/cons of the leet code solution as well as other potential ways to solve the problem.
 
 ## 📚 Resources
 * [Ordering Differences of DFS]
