@@ -14,7 +14,7 @@ For this team activity, we have provided three python files.
 
 1. Read through the code in the provided files. Explain the various lines to each other.
    * What is a major difference between the shortest_path functions?
-   * Why would this matter? (We will continue to explore this throughout the lab)
+   * Why would this matter? (We will continue to explore this throughout the team activity)
 2. In graph.py, we are creating  a small and medium graph. Take a moment and draw on the paper the visualization of the graph that those represent. 
 
 
