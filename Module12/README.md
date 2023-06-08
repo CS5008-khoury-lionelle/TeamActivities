@@ -1,10 +1,10 @@
-# Lab: Exploring Dijkstra's Algorithm
+# Team Activity: Exploring Dijkstra's Algorithm
 
 
-In this lab, you will explore Dijkstra's algorithm run time efficiency by comparing it against a version that uses a priority queue/heap, and a version that uses a list. You will also explore the effect of the graph density on the run time of Dijkstra's algorithm.
+In this team activity, you will explore Dijkstra's algorithm run time efficiency by comparing it against a version that uses a priority queue/heap, and a version that uses a list. You will also explore the effect of the graph density on the run time of Dijkstra's algorithm.
 
 ## Provided Files
-For this lab, we have provided three python files. 
+For this team activity, we have provided three python files. 
 * [graph.py](graph.py) - Contains the Graph class, which is used to represent a graph. 
 * [shortest_path.py](shortest_path.py) - Contains the Dijkstra's shortest_path functions, which is used to find the shortest path between two nodes in a graph. 
 * [tests.py](tests.py) - Contains tests including the ability to time the run time of the shortest_path functions.
@@ -12,7 +12,7 @@ For this lab, we have provided three python files.
 
 👉🏽 **Task** 👈🏽
 
-1. Read through the code in the provided files. Explain the code in your own words with your partners.
+1. Read through the code in the provided files. Explain the various lines to each other.
    * What is a major difference between the shortest_path functions?
    * Why would this matter? (We will continue to explore this throughout the lab)
 2. In graph.py, we are creating  a small and medium graph. Take a moment and draw on the paper the visualization of the graph that those represent. 
@@ -46,16 +46,16 @@ Visualize the algorithm on the graph you drew.
 You can also use the Visualization tool provided by the University of San Francisco to visualize Dijkstra's algorithm (link in the resources section). 
 
 ## Running the Code
-Once you have a good understanding of the algorithm and the code, it is time to run tests. You can do this my loading
+Once you have a good understanding of the algorithm and the code, it is time to run tests. You can do this by loading
 tests.py into the interactive python environment. 
 
-You can do this via the command line with
+You can do this via the command line with:
 
 ```bash
 $ python3 -i tests.py
 ```
 
-This will load the tests.py file into the interactive python environment, which intern imports the graph.py and shortest_path.py files. From here, you can run various commands such as
+This will load the tests.py file into the interactive python environment, which in turn imports the graph.py and shortest_path.py files. From here, you can run various commands such as
 
 ```python
 >>> test_small()
@@ -76,7 +76,7 @@ Build a table based on the timings for both run_timed_test, both with a mostly c
 
 * Take a moment to discuss the differences in speeds, what are some major points of difference between the different implementations of Dijkstra's algorithm? 
 * Did the differences go away (mostly) in a certain situation? 
-  * If so, what triggered that (think in respect to edges)
+  * If so, what triggered that (think in respect to edges)?
 
 
 ## Research
@@ -87,9 +87,9 @@ Research the time and space complexity of Dijkstra's algorithm. Between the two 
 
 * In regards to time/space complexity, how did the total number of edges affect the run time of the algorithm?
 
-## Finally
+## Leet Code
 
-Work on some more leet code problems. For your assignment you will be writing Dijsktra's algorithm in C, and you should feel free to use the python code as a reference. There are also many resources online that can help you with this. Note that for your homework, you will not need the heap version. The graphs while sparse, will be small enough the speed difference will not be noticeable.
+In your group, work on some leet code problems. Have a couple people practice "live coding" by discussing what you are doing as you write the code. Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. For your assignment you will be writing Dijsktra's algorithm in C, and you should feel free to use the python code as a reference. There are also many resources online that can help you with this. Note that for your homework, you will not need the heap version. The graphs, while sparse, will be small enough the speed difference will not be noticeable.
 
 
 
