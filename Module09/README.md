@@ -102,7 +102,7 @@ We encourage you to look at a more efficient implementation than using multiplic
 > Discussion: How effective is the djb2 compared to others for this particular dataset? 
 >
 > Second: What is a more efficient implementation? Do you think they picked 33 for this reason? 
-> Why would this matter? (reflect back to your assembly lab). 
+> Why would this matter? (reflect back to your assembly team activity). 
 
 ## Tests
 
