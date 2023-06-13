@@ -5,7 +5,7 @@
 #include "hashing.h"
 
 #define ALGO_SIZE 4 /* make sure to change this if you add hash algos to hash[]*/
-#define SIZE 2000000
+#define SIZE 1000000 /* change this around to mess with load / array size - we suggest 1 and other sizes */
 
 
 
@@ -33,7 +33,6 @@ void printCollisionsOnly(int *array, int size)
     int highest  = 0;
     int counter = 0;
     int length = 0;
-    int load = 0;
     for (int i = 0; i < size; i++) {
         if(array[i] > 1) { 
             total += array[i]; // really looking at total chain length > 1
@@ -42,17 +41,16 @@ void printCollisionsOnly(int *array, int size)
         }
         if(array[i] > 0) {
             counter++;
-            load += array[i]; // the n elements added to the table
         }
     }
     printf("Collisions: %d, Highest: %d, Average Length > 1: %.2f, Filled Spots: %d, Load: %.5f\n", total, highest, 
-           total / (float)length, counter, load / (float)SIZE);
+           total / (float)length, counter, counter / (float)SIZE);
 }
 
 int main(int argc, char** argv) {
 
     int *collisions[ALGO_SIZE]; 
-    if (argc < 1)
+    if (argc < 2)
     {
         printf("Requires at least one file as an argument");
         return 1;
@@ -89,10 +87,8 @@ int main(int argc, char** argv) {
         fclose(fp);
         for (int i = 0; i < ALGO_SIZE; i++)
         {
-            if (SIZE > 200)
-                printCollisionsOnly(collisions[i], SIZE);
-            else
-                printArray(collisions[i], SIZE);
+            printCollisionsOnly(collisions[i], SIZE);
+            //printArray(collisions[i], SIZE);
         
             free(collisions[i]); // free dynamically allocated arrays.
         }
