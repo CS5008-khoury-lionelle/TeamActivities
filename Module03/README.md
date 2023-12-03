@@ -1,122 +1,153 @@
-# Team Learning Activity
+# Team Activity File Reading and Analyzing Assembly
 
-Whenever you need to quickly add and remove items, but those items are always in order - a Linked List is a good option for the data structure. In this Lab, we will explore a **Singly Linked List**. You will then use this linked list as the foundation for the stack in your homework. 
+This lab seeks to help you understand File I/O in c, along with seeing the basic assembly that is generated for programs before it goes into a binary form.
 
-**Precondition**: Make sure to review the page on structs, iterators, linked lists, and nodes in Canvas if you haven't!
+For this team activity, you will have multiple small programs to write. The goals for this team activity are as follows:
+* Better understand command line program arguments
+* Better understand reading files in c
+* Better understand the assembly generated for a program, and the cost of various commands
 
-## Team Activity
-For this team activity, you will meet as a group at the scheduled meeting in MS Teams. The notes you take as a team should be stored in the files section of that meeting, and while not required, it is recommended that you create a nice naming scheme for the TAs to see the notes. They will also have access to your chat logs in the team.  They will use the attendance record to award points. 
+## :star: Working in Teams :star:
+When working in teams, remember do not let one person do all the work. Make sure to work together, and ask questions. It is also better if different people program, and you all take turns programming for various team assignments. 
 
 
 
-## Part 1: Picturing Linked Lists
+## Program Arguments
+Programs, especially command line programs, have arguments that are passed into them, and based on those arguments it changes how the program runs.  For example, 
 
-Given the following code, draw out the final memory structure similar to how you did in [Homework 02](https://github.com/CS5008-khoury-lionelle/hw02#linking-to-images).  You can draw with a program, or one person can draw (with direction from others) on paper and take a picture.
+* `ls -l` on the linux / macOS command line will list the files in the current directory in a long format. 
+* `code my_file.c` will open the file my_file.c in Visual Studio Code.
+* `gcc -g -Wall my_file.c -o my_file.out` will compile the file my_file.c into an executable called my_file.out
+
+Everything after the program name, is an argument!  
+
+In c programming, you will notice the main function as two optional arguments
 
 ```c
-typedef struct node
-{
-    int num_wins;
-    int year;
-    struct node *next;
-} Pair;
-
-Pair *new_node(int wins, int year, Pair *next)
-{
-    Pair *newNode = (Pair*)malloc(sizeof(Pair));
-    newNode->num_wins = wins;
-    newNode->year = year;
-    newNode->next = next;
-    return newNode;
-}
-
-Pair* create_simple_list() {
-   Pair *fourth = new_node(40, 2008, NULL);
-   Pair *third = new_node(30, 2007, fourth);
-   Pair *second = new_node(20, 2006, third);
-   Pair *head = new_node(10, 2005, second);
-   return head;
-}
-
-int main() {
-   Pair* head = create_simple_list();
-   return 0;
+int main(int argc, char** argv){
+    // code goes here
 }
 ```
 
-In addition the the memory diagram you draw, a way you can show a linked list is the following:
+* argc - is the argument count. This is the number of arguments passed into the program. It is always at least 1
+* argv - is an array of strings. Each string is an argument passed into the program. The first argument is always the program name.
 
-```mermaid
-graph LR
-    HEAD --> A[10, 2005]
-    A[10, 2005] --> B[20, 2006]
-    B --> C[30, 2007]
-    C --> D[40, 2008]
-    D --> NULL
+
+👉🏽 **Your Task**  Write a program that prints out all of the arguments passed into it. Make it so at least one argument is passed into it. 
+
+### Discussion
+* What is the first argument passed into the program?
+* Why would having program arguments be useful for programs?
+
+
+## Reading a File
+If you followed Mike Shaw's video, you will have a good idea of how to read a file. This follows a similar guideline. 
+
+The standard c library stdlib provides a number of File access functions.  If you wanted to open a file using the first 
+program argument, you could do it the following way
+
+```c
+FILE *input = fopen(argv[1],"r");
 ```
 
+```c
+char buff[BUFF_SIZE]; 
 
-### Exploring the Code
+FILE *input = fopen(argv[1],"r");
+char* line = malloc(BUFF_SIZE * sizeof(char));
+while (fgets(line, BUFF_SIZE, input) != NULL) {
+    // do the thing, line now has the line from input
+    
+}
 
-Take a look at [linkedlist.h](linkedlist.h). Describe what you see and notice. Pay attention to the `push_front` and `add_back` functions. In your own words, describe to each other what each function does. 
-
-#### Drawing Push Front
-Using a similar drawing to the list above, draw out what happens when you call `push_front`. The important part is to help understand the order of the code, and what happens to the pointers.
-
-
-### Iterating over a Linked List
-As a group, write a function the iterates over the list, and prints out the values. The above list would look like the following:
-
-```text
-(10, 2005) -> (20, 2006) -> (30, 2007) -> (40, 2008) 
+free(line); // don't forget to free memory!
+fclose(input); // don't forget to close a file!
 ```
 
-#### Test printing a list
-Using the main function in [main.c], go ahead and build a list by looping over the arrays. Then, print out the list.
+👉🏽 **Your Task**  Read the file with the name passed in via program arguments, and print out its contents to the screen 
 
-If you did it correctly, your print should look like
-```text
-(108, 2018) -> (93, 2017) -> (93, 2016) -> (78, 2015) -> (71, 2014) 
+
+## Generating Assembly Files 
+
+Both gcc and clang allow you to generate the assembly file for their code.  Looking at [simple.c], we see a program that
+simply adds two numbers, and then ends. However, [simple.s] is the assembly built from this program. This was done using the following option.
+
+> clang -S simple.c
+
+👉🏽 **Your Task** Generate the assembly code for the programs you just wrote by using the -S option.
+
+
+### Discussion
+* What are some of the assembly commands generated? 
+* Was there more than you expected? 
+* If you run `clang -S shift.c`. Do you notice anything unusual about the generated assembly? (alright if you don't.. will cover it below)
+
+## Finishing Estimator
+Estimator is a program that helps estimate the total number of processor cycles for a program to run. This can be helpful when comparing the costs of various operations in your program (though it is very loosely done).
+
+Go ahead and use [estimator.c] for your template. You will notice the skeleton is implemented, but you will need to complete the `run_program` function
+
+
+👉🏽 **Your Task**  Go ahead and finish the `run_program` function.
+
+
+### Discussion
+* What were some challenges?
+* What do the cycles tell you about the difficulty of the process for the computer?
+* Why does this/knowing assembly matter?
+  * This right here is the hard one. It can be difficult to see the forest through the trees, so discuss some reasons that come to mind and share them with the class at the end. 
+* If you have time, use the Godbolt tool (linked below) to try equivalent programs in various languages. 
+  * How does python and c differ, even if it the code is "equivalent"?
+
+## Diving Into Optimization
+
+As a quick reminder, there is a the `shift` operators in most languages. The left and right shift operators are `<<` and `>>` respectively. These operators shift the bits of a number left or right. For example, `5 << 1` is `10` and `10 >> 1` is `5`.
+
+Go ahead and compile shift.c, and run the program. For example
+
+```bash
+clang shift.c -o shift.out
+./shift.out 10
 ```
 
-#### More Iteration Practice - Find
-Looking at the function `Pair *find(PairList *list, int year)`, write a function that finds a node in the list, and returns it. If the node is not found, return NULL.
+Notice all three statements are equivalent! However, if you look at the assembly generated, you will notice that the first two are the same, but the third is different. Why do you think this is? Compilers will try to optimize their code, and since the cycle costs of MUL is more than SHL, it will try to use SHL when possible.
 
-Add more tests to your main function to test this function.
+:star: Go ahead and run your estimator on shift.s. Take a look at the total cycle cost. :star:
 
+Important - before this next step, you will want to backup your shift.s file. You can do this by running the following command
 
-#### More Iteration Practice - Free
+```bash
+cp shift.s shift.s.bak
+```
 
-So far, the program has a major error. The memory is not being freed! Write a function that frees the memory in the list. Discuss why you need a separate function to do this instead of just calling `free(list)` in the main function.
+### Optimization Level 3
+A good compiler will go even farther. Try the following compile command.
 
-### Insert and Remove
+```bash
+clang shift.c -S -O3
+```
 
-As a group, discuss how you would insert and remove an item in the middle of the list. Draw out how that would look with pointers.  
+That is the letter O, not the number 0. This will compile the code with the highest level of optimization. Now look at the assembly generated. Notice how it is different than the previous assembly generated.
 
+:star: Go ahead and run your estimator on shift.s. Take a look at the total cycle cost. :star:
 
-## Part 2: Stack and Queue
-
-Reviewing back to your CS 5001 class, you learned briefly about stacks and queues. Take a moment to discuss the differences, and then describe how a linked list could be used for either. Is it better for a stack or a queue? Why? This may involve some research, but why would you want to use a linked list over an array for a stack or queue? (and vise versa). 
-
-
-## Part 3: Leet Code Practice 
-
-Go to module 02, and you will see a link to a Leet Code Page. For every weekly team activity, you will be asked to go to past modules and work on the leet code practice as a team. (in this case, Module 02 is the only past module).
-
-As a team, pick 2 problems to work on. Discuss your solutions and how you got there. It is alright if you work / discuss together, but one person should not tell the others how to do it. If a person is already familiar with the problem, they should help guide the others to the solution or maybe just be the person that types while the others talk. Remember, this is your study group, the more you help each other **understand**, the better you will all be!
+### Discussion
+* How did the total cycle costs of the program change? When setting up this team activity, it was a substantial difference! 
 
 
-## 📝 Grading Rubric
+## Leet Code Challenge Problem Practice
 
-This activity is manually graded by TAs looking at the attendance record and making sure notes were taken for the meeting.
+As per our standard end of the team activity - go to the Module 03 challenge problems, and as a group pick a couple to work on. Discuss your solutions. 
 
 
 ## 📚 Resources
-* [Red Sox Data Source](http://www.espn.com/mlb/history/teams/_/team/Bos)
-* [Red Sox Data (CSV)]( https://www.ccs.neu.edu/home/awjacks/cs3650f18/Labs/2/red_sox_history.csv)
-* [C LinkedList Tutorial](https://www.learnc.net/c-data-structures/c-linked-list/)
-* [Crash Course on C Linked Lists](https://www.youtube.com/watch?v=SB9si64asSk&index=8&list=PLvv0ScY6vfd8qupx0owF78ZcbvySvbWfx)
-* [C Struct Tutorials Point](https://www.tutorialspoint.com/cprogramming/c_structures.htm)
-* [C Pointers Tutorials Point](https://www.tutorialspoint.com/cprogramming/c_pointers.htm)
-* [Another C LinkedList tutorial](https://www.cprogramming.com/tutorial/c/lesson15.html)
-* [More on Typedef](https://en.wikipedia.org/wiki/Typedef)
+
+* [strstr() tutorial](https://www.tutorialspoint.com/c_standard_library/c_function_strstr.htm)
+* [CString reference](https://cplusplus.com/reference/cstring/)
+* [Compiler Explorer](https://godbolt.org/) - really neat tool to explore compiled code
+* [Guide to Cycle Costs](https://www.agner.org/optimize/instruction_tables.pdf)
+
+
+[simple.c]: simple.c
+[simple.s]: simple.s
+[estimator.c]: estimator.c
