@@ -43,7 +43,7 @@ To get started, download the associated code:
 When you compile your code, you will be compiling from tester.c
 
 ```console
-> clang -Wall tester.c -o tester.out
+> gcc -Wall tester.c -o tester.out
 ```
 
 To run your bubble sort, it would be something like the following
@@ -61,7 +61,7 @@ The second number is the number of random numbers you want generated.
 Right now, the bubble sort doesn't work! (you have to write it). But the sort built into C does work. As such, you can test  `tester.c` with the following
 
 ```text
-> clang -Wall tester.c -o tester.out
+> gcc -Wall tester.c -o tester.out
 > ./tester.out 1 10000
 ```
 (the print doesn't work with the built in c library as it isn't an option.)
@@ -125,7 +125,7 @@ Work each one out on paper - similar to how you did for the 5 value array above 
 
 ## Leet Code Practice
 
-Lastly, work on modules 04 leet code practice. Everyone pick a different problem, and take turns explaining your solution *as* you work through the code (as time allows). This is called "live coding" and often required in technical interviews. Moving forward, we would like you to emphasize the explaining of code as you work through it, to better prepare you for technical interviews.
+Lastly, work on modules 03 leet code practice. Everyone pick a different problem, and take turns explaining your solution *as* you work through the code (as time allows). This is called "live coding" and often required in technical interviews. Moving forward, we would like you to emphasize the explaining of code as you work through it, to better prepare you for technical interviews.
 
 
 ## 📚 Resources
