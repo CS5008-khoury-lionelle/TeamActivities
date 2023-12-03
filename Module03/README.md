@@ -137,7 +137,7 @@ That is the letter O, not the number 0. This will compile the code with the high
 
 ## Leet Code Challenge Problem Practice
 
-As per our standard end of the team activity - go to the Module 03 challenge problems, and as a group pick a couple to work on. Discuss your solutions. 
+As per our standard end of the team activity - go to the Module 02 challenge problems, and as a group pick a couple to work on. Discuss your solutions. 
 
 
 ## 📚 Resources
