@@ -72,7 +72,7 @@ fclose(input); // don't forget to close a file!
 Both gcc and clang allow you to generate the assembly file for their code.  Looking at [simple.c], we see a program that
 simply adds two numbers, and then ends. However, [simple.s] is the assembly built from this program. This was done using the following option.
 
-> clang -S simple.c
+> gcc -S simple.c
 
 👉🏽 **Your Task** Generate the assembly code for the programs you just wrote by using the -S option.
 
@@ -80,7 +80,7 @@ simply adds two numbers, and then ends. However, [simple.s] is the assembly buil
 ### Discussion
 * What are some of the assembly commands generated? 
 * Was there more than you expected? 
-* If you run `clang -S shift.c`. Do you notice anything unusual about the generated assembly? (alright if you don't.. will cover it below)
+* If you run `gcc -S shift.c`. Do you notice anything unusual about the generated assembly? (alright if you don't.. will cover it below)
 
 ## Finishing Estimator
 Estimator is a program that helps estimate the total number of processor cycles for a program to run. This can be helpful when comparing the costs of various operations in your program (though it is very loosely done).
@@ -106,7 +106,7 @@ As a quick reminder, there is a the `shift` operators in most languages. The lef
 Go ahead and compile shift.c, and run the program. For example
 
 ```bash
-clang shift.c -o shift.out
+gcc shift.c -o shift.out
 ./shift.out 10
 ```
 
@@ -124,7 +124,7 @@ cp shift.s shift.s.bak
 A good compiler will go even farther. Try the following compile command.
 
 ```bash
-clang shift.c -S -O3
+gcc shift.c -S -O3
 ```
 
 That is the letter O, not the number 0. This will compile the code with the highest level of optimization. Now look at the assembly generated. Notice how it is different than the previous assembly generated.
