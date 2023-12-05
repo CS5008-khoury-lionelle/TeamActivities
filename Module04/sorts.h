@@ -22,7 +22,6 @@ void bubbleSortIntegers(int *array, unsigned int size, int print)
    // TODO implement
 }
 
-
 // provided code 
 
 // =============== Helper Functions ===============

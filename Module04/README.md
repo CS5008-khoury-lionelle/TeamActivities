@@ -130,7 +130,6 @@ Lastly, work on modules 03 leet code practice. Everyone pick a different problem
 
 ## 📚 Resources
 * [Bubble Sort on Wikipedia](https://en.wikipedia.org/wiki/Bubble_sort)
-* [C Program Bubble Sort](https://www.geeksforgeeks.org/c-program-for-bubble-sort/)
 * [Bubble by Geeks for Geeks](https://www.geeksforgeeks.org/bubble-sort/)
 
 
