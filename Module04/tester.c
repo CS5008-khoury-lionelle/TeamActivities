@@ -1,4 +1,7 @@
-/// to compile: clang -Wall tester.c -o tester.out
+/// to compile: gcc -Wall tester.c -o tester.out
+
+/// NOTE: this tester is simplified from the one used in the assignment, make sure to use the assignment
+// one for homework!
 
 #include <stdio.h>  // Include file for standard input/output
 #include <stdlib.h> // so we can use atoi()
