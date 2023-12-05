@@ -15,11 +15,14 @@ void swap(int *a, int *b)
 void printIntArray(int *array, unsigned int size)
 {
     unsigned int i; // Note: 'unsigned int' is a datatype for storing positive integers.
-    for (i = 0; i < size; i++)
+    for (i = 0; size > 0 && i < size - 1; i++)
     {
         printf("%d ", array[i]);
     }
-    printf("\n");
+    if (size > 0)
+    {
+        printf("%d\n", array[size - 1]); // additional line, to remove trailing space at the end of the line
+    }
 }
 
 #endif
