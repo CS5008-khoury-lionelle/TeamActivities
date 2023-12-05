@@ -30,11 +30,11 @@ double sort_and_time(int* array, int size, int type, int print) {
     // Setup timers
     struct timespec begin, end;
     // Get the time before we start
-    clock_gettime(CLOCK_MONOTONIC_RAW, &begin);
+    clock_gettime(CLOCK_MONOTONIC, &begin);
     // Perform the sort
     sorts[type](array, size, print);
     // Get the time after we are done
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    clock_gettime(CLOCK_MONOTONIC, &end);
 
     return (end.tv_nsec - begin.tv_nsec) / 1000000000.0 +
                         (end.tv_sec - begin.tv_sec);
