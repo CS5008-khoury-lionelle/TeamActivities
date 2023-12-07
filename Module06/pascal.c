@@ -22,7 +22,7 @@ void printSingleRow(ull *row, int size)
     printf("\n");
 }
 
-ull pascaldp(int n, int i, int *ops)
+ull pascaldp(int n, int i, ull *ops)
 {
     if (n == i || i == 0)
     {
@@ -40,7 +40,7 @@ ull pascaldp(int n, int i, int *ops)
     }
 }
 
-ull* pascaldp_full(int n, int *ops)
+ull* pascaldp_full(int n, ull *ops)
 {
     ull *row = malloc((sizeof(ull)) * (n+1));
     for (int i = 0; i <= n; i++)
@@ -49,7 +49,7 @@ ull* pascaldp_full(int n, int *ops)
     }
     return row;
 }
-ull pascalr(int n, int i, int *ops)
+ull pascalr(int n, int i, ull *ops)
 {
     if (n == i || i == 0)
     {
@@ -62,7 +62,7 @@ ull pascalr(int n, int i, int *ops)
     }
 }
 
-ull* pascalr_full(int n, int *ops)
+ull* pascalr_full(int n, ull *ops)
 {
     ull *row = malloc((sizeof(ull)) * (n+1));
     for (int i = 0; i <= n; i++)
@@ -73,7 +73,7 @@ ull* pascalr_full(int n, int *ops)
 }
 
 
-ull *pascal_iterative(int n, int *ops)
+ull *pascal_iterative(int n, ull *ops)
 {
     ull **triangle = (ull **)malloc((n + 1) * sizeof(ull *));
     for (int i = 0; i <= n; i++)
@@ -112,7 +112,7 @@ ull *pascal_iterative(int n, int *ops)
 
 
 
-double time_function(ull* (*func)(int, int *), int n, int *ops, bool print)
+double time_function(ull* (*func)(int, ull *), int n, ull *ops, bool print)
 {
     // Setup timers
     struct timespec begin, end;
@@ -156,7 +156,7 @@ int main(int argc, char* argv[])
         print = true;
     }
 
-    int ops;
+    ull ops;
     double time;
     switch (type)
     {
@@ -164,41 +164,41 @@ int main(int argc, char* argv[])
         printf("iterative version\n");
         ops = 0;
         time = time_function(pascal_iterative, n, &ops, print);
-        printf("time: %f(%d)\n", time, ops);
+        printf("time: %f(%llu)\n", time, ops);
         break;
     case 1:
         printf("recursive version\n");
         ops = 0;
         time = time_function(pascalr_full, n, &ops, print);
-        printf("time: %f(%d)\n", time, ops);
+        printf("time: %f(%llu)\n", time, ops);
         break;
     case 2:
         printf("dynamic programming version\n");
         ops = 0;
         time = time_function(pascaldp_full, n, &ops, print);
-        printf("time: %f(%d)\n", time, ops);
+        printf("time: %f(%llu)\n", time, ops);
         break;
     case 4:
         ops = 0;
         time = time_function(pascal_iterative, n, &ops, print);
-        printf("%f,%d,", time, ops);
+        printf("%f,%llu,", time, ops);
 
         ops = 0;
         time = time_function(pascaldp_full, n, &ops, print);
-        printf("%f,%d,--", time, ops);
+        printf("%f,%llu,-,-", time, ops);
         break;
     default:
         ops = 0;
         time = time_function(pascal_iterative, n, &ops, print);
-        printf("%f,%d,", time, ops);
+        printf("%f,%llu,", time, ops);
 
         ops = 0;
         time = time_function(pascaldp_full, n, &ops, print);
-        printf("%f,%d,", time, ops);
+        printf("%f,%llu,", time, ops);
 
         ops = 0;
         time = time_function(pascalr_full, n, &ops, print);
-        printf("%f,%d", time, ops);
+        printf("%f,%llu", time, ops);
 
         break;
     }
