@@ -14,6 +14,7 @@ python3 test_runner.py 30 > pascal_table.md
 import subprocess
 import sys
 import csv
+import argparse
 
 EXEC = ["./pascal.exe"]
 COMMON_ARG_FORMAT = "{n} {type}"
@@ -66,12 +67,13 @@ def save_to_csv(values: list, out_file: str):
         results (list): the results to save
         out_file (str): the base file name to write to
     """
-    with open(out_file, "w", newline='') as f:
+    with open(out_file, "w", newline="") as f:
         csv_writer = csv.writer(f)
         csv_writer.writerow(CSV_HEADER.split(","))
         for i, row in enumerate(values):
-            row = [i+1] + row
+            row = [i + 1] + row
             csv_writer.writerow(row)
+
 
 def main(n, step=1, out_file=OUT_DEFAULT):
     run_type = 3
@@ -83,17 +85,20 @@ def main(n, step=1, out_file=OUT_DEFAULT):
             results["operations"].append(result["operations"])
         except RecursionTimeoutError as e:
             run_type = 4
-            break
+            result = run_single(i, run_type) # so i don't skip this one
+            results["timings"].append(result["timings"])
+            results["operations"].append(result["operations"])
         except Exception as e:
             print(e, file=sys.stderr)
-            break
     save_to_csv(results["operations"], OUT_FILE_OPS + out_file)
     save_to_csv(results["timings"], OUT_FILE_TIME + out_file)
 
 
-## note while using argv directly, there are better tools for this like pip click
+
 if __name__ == "__main__":
-    n = 30 if len(sys.argv) < 2 else int(sys.argv[1])
-    if len(sys.argv) == 3:
-        FORMAT = "csv"
-    main(n)
+    parser = argparse.ArgumentParser(description='Run the pascal triangle program')
+    parser.add_argument('n', type=int, help='the number of rows to generate')
+    parser.add_argument('--step', type=int, default=1, help='the step size')
+    parser.add_argument('--out', type=str, default=OUT_DEFAULT, help='the output file name')
+    args = parser.parse_args()
+    main(args.n, args.step, args.out)
