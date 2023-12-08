@@ -24,20 +24,8 @@ void printSingleRow(ull *row, int size)
 
 ull pascaldp(int n, int i, ull *ops)
 {
-    if (n == i || i == 0)
-    {
-        return 1;
-    }
-    else if (table[n][i] > 0)
-    {
-        return table[n][i];
-    }
-    else
-    {
-        (*ops)++;
-        table[n][i] = pascaldp(n - 1, i, ops) + pascaldp(n - 1, i - 1, ops);
-        return table[n][i]; // pascal(n - 1, i) + pascal(n - 1, i - 1);
-    }
+    // student todo
+    return NULL; // remove
 }
 
 ull* pascaldp_full(int n, ull *ops)
