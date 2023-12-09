@@ -69,16 +69,22 @@ larger numbers due a multiplication and division calculation [ref](https://en.wi
 
 ### Discussion and Code 
 Take this time to compile the given code, and play with the code. For example if your compile
-command is 
+command[^1^] is:
+
+[^1^]: Depending on if you compile on linux or windows, your warnings may change! This is a difference
+in the definition of uint64. You can safely ignore the warning for this team activity, but worth
+noting for future reference.
+
+
 
 ```text
-gcc -Wall pascal.c -o pascal.out
+gcc -Wall pascal.c -o pascal.exe
 ```
 
 You could run the following to produce the following output:
 
 ```text
-./pascal.out 10 0 print
+./pascal.exe 10 0 print
 iterative version
 1 10 45 120 210 252 210 120 45 10 1 
 time: 0.000007(55)
@@ -87,7 +93,7 @@ time: 0.000007(55)
 or
 
 ```text
-./pascal.out 10 1 print
+./pascal.exe 10 1 print
 recursive version
 1 10 45 120 210 252 210 120 45 10 1 
 time: 0.000005(1013)
@@ -105,7 +111,7 @@ Both will run relatively quickly, but if you increase your number to ~35, you wi
 
 
 ### Dynamic Programming
-👉🏽 **Task**: Use [pascal.c] to write a dynamic programming variation of how to solve Pascal's Triangle for the Nth row.
+👉🏽 **Task**: Use [pascal.c](pascal.c) to write a dynamic programming variation of how to solve Pascal's Triangle for the Nth row.
 
 Take a moment to discuss and describe dynamic programming in your own words to your team.  What are some things you are going to need to write a dynamic version of pascal's triangle. 
 
