@@ -63,17 +63,18 @@ def run_single(n: int, typ: int) -> dict:
     return {"timings": timings, "operations": operations}
 
 
-def save_to_csv(values: list, out_file: str):
+def save_to_csv(values: list, out_file: str, step:int):
     """saves a list to a csv file
     Args:
         results (list): the results to save
         out_file (str): the base file name to write to
+        step (int): the step size used
     """
     with open(out_file, "w", newline="") as f:
         csv_writer = csv.writer(f)
         csv_writer.writerow(CSV_HEADER.split(","))
         for i, row in enumerate(values):
-            row = [i + 1] + row
+            row = [i*step + 1] + row
             csv_writer.writerow(row)
 
 
@@ -92,8 +93,8 @@ def main(n, step=1, out_file=OUT_DEFAULT):
             results["operations"].append(result["operations"])
         except Exception as e:
             print(e, file=sys.stderr)
-    save_to_csv(results["operations"], OUT_FILE_OPS + out_file)
-    save_to_csv(results["timings"], OUT_FILE_TIME + out_file)
+    save_to_csv(results["operations"], OUT_FILE_OPS + out_file, step)
+    save_to_csv(results["timings"], OUT_FILE_TIME + out_file, step)
 
 
 
