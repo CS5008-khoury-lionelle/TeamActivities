@@ -40,10 +40,12 @@ def run_single(n: int, typ: int) -> dict:
     Returns:
         float: the time it took, or nan if TIMEOUT is reached first
     """
-    args = COMMON_ARG_FORMAT.format(n=n, type=typ)
+  #  args = COMMON_ARG_FORMAT.format(n=n, type=typ)
+    exec = f"{EXEC} {n} {typ}".split() #added so EXEC can have spaces in it such as 'python3 pascal.py' see midterm
+
     try:
         results = subprocess.run(
-            [EXEC] + args.split(), timeout=TIMEOUT, capture_output=True, text=True
+            exec, timeout=TIMEOUT, capture_output=True, text=True
         )
     except subprocess.TimeoutExpired:
         raise RecursionTimeoutError(f"Timeout of {TIMEOUT} seconds reached for {args}")
