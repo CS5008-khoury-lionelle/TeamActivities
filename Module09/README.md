@@ -1,149 +1,152 @@
-# Team Activity: Explore Hash Algorithms and Collisions  
+# Team Activity: Breadth First Search and Depth First Search on Trees
 
-For this team activity, you will explore hashing algorithms and collisions. When working with Hashmaps,
-there will be collisions, but the depth of the lists (or even trees as you will explore in future weeks),
-is often very small. This is why even with large numbers, such as near a million items, you still get effectively
-$O(1)$ access time. 
+In this team activity you will explore using [Breadth First Search] and [Depth First Search] on a tree structure. 
 
-## Review The Code
 
-In your group, review the provided code in [hashing.h](hashing.h) and [hash_test.c](hash_test.c). 
-Explain to each other the various lines. `hash_test.c` probably has code that looks more familiar to you.
-The code that may look unique (though used in past test files), is the code that includes function pointers.
+## Code Walkthrough
+In your group, review the code in [tree.h](tree.h) & [tree.c](tree.c). Explain to each other the various lines.
+You should be able to answer the following questions:
 
-```c
-uint32_t (*hash[])(char*) = {
-    simple_hash,
-    djb2,
-    fnv_hash,
-    jenkins_one_at_a_time_hash    
-};
+* What is the purpose of the struct?
+* What is the difference between addNode and addNodeBreadthFirst?
+* Why would we need to remove `\n` in `read_file_into_tree`?
+* How are we adding nodes to a tree? Given the file [letters.txt](letters.txt), how does the tree look like?
+  
+Now, review the code in [printer.c](printer.c). Explain to each other the various lines.
+You should be able to answer the following questions:
+
+* Why would be need a queue for a breadth first search? (it may help to draw it out)
+* Would we need a queue for the Depth First Prints? Why or why not?
+
+
+## Different Search Types
+Looking at [letters.txt](letters.txt), we have A-G, in order. We can use this to create a tree structure,
+and we will be focusing on a breadth first creation of the tree, by using the letters.txt file.
+
+```mermaid
+flowchart TD
+    A --> B
+    A --> C
+    B --> D
+    B --> E
+    C --> F
+    C --> G
 ```
 
-What this array stores is a pointer to each function, but also defines that the functions will return an `uint32_t` and are 
-required to take in a `char *` (string) as a parameter. If you want to call `simple_hash` it would be `simple_hash[0]`.
-
-Later in your code, you will see:
-
-```c
-for (int i = 0; i < ALGO_SIZE; i++)
-{
-      uint32_t loc = (hash[i](buffer)) % SIZE;
-      collisions[i][loc]++;
-}
-```
-This means that for every algorithm, call the hash, mod it by the `SIZE` of the 'hashmap' (really just an array in this case), and increment a counter to track the number of collisions that happen. Since the `collisions[i]` is initialized with 0, it will just continue to count up for everything a key wants to be stored in that position. 
-
-Then later in `void printCollisionsOnly(int *array, int size)` it prints out the stats of the collisions array for each algorithm in order. 
-
-This code is setup so you can get a better feel of how hashmaps work in practice, even if we are not storing the full key-value pairs. 
+### Breadth First Search
+Breadth first search is a search algorithm that starts at the root node, and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level. Printing the letters in breadth first order would be: `A, B, C, D, E, F, G`. This is especially true as the order we added nodes was in a breadth first manner for this particular tree. 
 
 
+### Depth First Search: Preorder
+Preorder is a depth first search, where the root is visited first, then the left subtree, then the right subtree.
+Printing the letters in preorder would be: `A, B, D, E, C, F, G`. Take a moment to draw out the order
+of the visits, and how this would look on the tree.
 
-### *.txt files
-There are a number of .txt files. If you open them you will find the files with ids in the name contain values such as `tt0000001`, where as the titles contain the corresponding movie titles, like the `The Princess Bride` which is on line 53,321. The ids and titles are pulled from the open IMDB dataset, and filtered for US only movies with IMDB ratings to reduce it down from the 32 million points to only 925,174 titles. Then using `head -n #` smaller test files were developed at 1000, 10,000, and 100,000. 
 
-### Running the Code
-You should be able to run the code with:
+### Depth First Search: Postorder
+Postorder is a depth first search, where the left subtree is visited first, then the right subtree, then the root.
+Postorder would be: `D, E, B, F, G, C, A`. Take a moment to draw out the order based on the tree node traversal.
+
+
+### Depth First Search: Inorder
+Inorder is a depth first search, where the left subtree is visited first, then the root, then the right subtree.
+Inorder would be: `D, B, E, A, F, C, G`. Take a moment to draw out the order based on the tree node traversal.
+
+
+## 👉🏽 **Task** 👈🏽 - Write DFS Prints 
+
+In [printer.c](printer.c), you will find a function `print_bfs` that prints the tree in a breadth first manner. Your task is to write the `print_dfs_preorder`, `print_dfs_postorder`, and `print_dfs_inorder` functions. These functions are much simpler than the `print_bfs` function. Also, they are recursive functions. It is recommended you get one of the functions working first, as the other two are very similar with only a change on where you put the print statement.
+
+### Testing Print
+To test your breadth first print, you can run the following commands:
 
 ```console
-> clang -Wall hash.test.c 
-> ./a.out movie_ids_us_1000.txt
+make 
+./dfs_print.out letters.txt breadthfirst
 ```
 
-You can also run more than one file at a time chaining the results:
+To test the other print types, replace breadthfirst with preorder, postorder, or inorder. 
+
+
+## 👉🏽 **Task** 👈🏽 - Use gnomes_names.txt
+Using the names in [gnome_names.txt](gnome_names.txt)<sup>[2]</sup>, draw out the tree structure, each of the types of prints. Then run what you think the output would be against the output of your program. This file contains 10 names, so you would end up with an unbalanced tree.
+
+
+## 👉🏽 **Task** 👈🏽 - Practicing With Larger Files
+In programming, we often need to test our code with larger files. In this case, we have a file [elf_names.txt](elf_names.txt) that contains 40 names. While this file isn't as large as some of the files we deal with in the real world, it is large to make
+calculating the DFS and BFS prints by hand difficult. 
+
+We have provided three test files:
+* elf_names_preorder.txt
+* elf_names_postorder.txt
+* elf_names_inorder.txt
+
+The names are as they sound, the preorder, postorder, and inorder prints of the tree from elf_names.txt. In order to learn some of the tools we can use to test our code, we will be using the `diff` command. Run your code with the elf_names.txt file, with the following commands
 
 ```console
-> ./a.out movie_ids_us_1000.txt movie_titles_us_1000.txt movie_ids_us_10000.txt movie_titles_us_10000.txt movie_ids_us_100000.txt movie_titles_us_100000.txt movie_ids_us_unique.txt movie_titles_us_unique.txt 
-```
-The above is all one line, but auto wraps in display. 
-
-You should go ahead and run the code. When running it, you will see something like (depending on how many files you test against):
-
-```text
-movie_ids_us_1000.txt...
-Collisions: 1000, Highest: 1000, Average Length > 1: 1000.00, Filled Spots: 1, Load: 0.00000
-Collisions: 1000, Highest: 1000, Average Length > 1: 1000.00, Filled Spots: 1, Load: 0.00000
-Collisions: 0, Highest: 0, Average Length > 1: -nan, Filled Spots: 1000, Load: 0.00050
-Collisions: 0, Highest: 0, Average Length > 1: -nan, Filled Spots: 1000, Load: 0.00050
-
-movie_titles_us_1000.txt...
-Collisions: 1000, Highest: 1000, Average Length > 1: 1000.00, Filled Spots: 1, Load: 0.00000
-Collisions: 1000, Highest: 1000, Average Length > 1: 1000.00, Filled Spots: 1, Load: 0.00000
-Collisions: 22, Highest: 2, Average Length > 1: 2.00, Filled Spots: 989, Load: 0.00049
-Collisions: 22, Highest: 2, Average Length > 1: 2.00, Filled Spots: 989, Load: 0.00049
-```
-The first two lines are high because those functions are not implemented yet, so only returning 0. 
-
-> Discussion: What does each value represent out of Collisions, Highest, Average Length > 1, Filled Spots, and Load. Make sure to discuss together what is the ideal load balance num.
-
-
-## 👉🏽 **Task**: Write Simple Hash
-
-Using your notes from the class videos or on your own, write a simple hash that that adds the ASCII value of the characters. As a reminder, just casting a character as an int gives you the ascii value, so you can loop through every character in the string, and
-just add the values of those characters.
-
-> Discussion: How effective is the "simple hash" compared to the other
-two hashes that are implemented - for this particular dataset"? 
-
-
-## 👉🏽 **Task**: Write djb2 Hash
-
-Now work on the djb2 hash, which as a reminder, is:
-
-```text
-hash = 5381
-for c in string:
-    hash = hash * 33 + c
+./dfs_print.out elf_names.txt preorder > my_preorder.txt
+diff elf_names_preorder.txt my_preorder.txt
 ```
 
-We encourage you to look at a more efficient implementation than using multiplication. 
+By default if the files are exactly the same, you will get no output. If there is a difference, you will get a line by line comparison of the two files. You can add a flag to tell it when the files are exactly the same, by adding the -s flag. 
 
-> Discussion: How effective is the djb2 compared to others for this particular dataset? 
->
-> Second: What is a more efficient implementation? Do you think they picked 33 for this reason? 
-> Why would this matter? (reflect back to your assembly team activity). 
 
-## Tests
-
-Look at the file, and run various tests.
-
-* What happens when you change SIZE?
-* Is there an optimal number/size, that increases your load factor but not too much (0.5-0.7)?
-* What are the differences between the various functions?
-  * Number of operations?
-  * Types of operations? 
-  * Do the ones that perform better come at an increased cost?
-* Would prime numbers be useful staring points?
-
-If you don't recall what some operators do - look them up! Discuss them (particular the XOR and the shifts). Why would these be useful? 
-As a reminder, hash algorithms care more about the binary bits, which thinking about it in a form of binary may help better understand why they may use those. 
-
-For example, take 5 in binary (101) and apply the operations to that small value, to get a better idea of the transformations that are happening. You can always either write a small see program, or perform the same operations in the python interactive interrupter to see what is going on! 
-
-```python
->>>bin(5)
-'0b101'
->>>bin(5<<2) 
-'0b10100'
->>>bin(5*4)
-'0b10100'
+```console
+diff -s elf_names_preorder.txt my_preorder.txt
 ```
 
-## Final Discussion
+Try that with each of the ordering types. 
 
-You will never find a perfect hash, and there is often a cost of performance the more complicated your transformation. As such, those who define hashmaps are often searching for a "good enough" hash algorithm, and then they provide a way to let people change the default implementation so they can be more specific for their domain. 
+## Discussion  💬
 
-For object oriented languages such as Java, those are built into the objects themselves to determine their hash. 
+In your group, discuss the following questions:
 
-> Discussion: 
-> Discuss a hashmap design. See if you can explain to each other how it is designed, and why it is effectively $O(1)$.  
-> Can you also generate a case where access/insert/delete are $O(n)$?
+* What is the difference between a breadth first search and a depth first search?
+* What tasks are suited for a breadth first search?
+* What tasks are suited for a depth first search?
+* Can you come up with everyday examples of inorder, postorder, and preorder? (hint, look at your calculator)
 
-## Leet Code Practice
-Take time practicing some of the past modules leet code. While you may not have time for everyone to do this, have a couple people practice "live coding". Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. I recommend that you setup a rotation of people to practice this skill within your team, ideally a couple every week. The other teams members can offer support, and then do a code review after a solution is generated. Discuss pros/cons of the leet code solution as well as other potential ways to solve the problem.
+Also for the tree:
+* Define a Binary Search Tree. Write out the steps to add a node to a Binary Search Tree, and use a [gnomes_names.txt](gnomes_names.txt) file to draw out the tree that is a BST format. 
+  * How many steps is needed to get to `Canonsbass` as compared to just looking line by line in the file? 
+* Discuss how you would implement a Binary Search Tree (BST) using the tree structure we have created.  
+  * You may want to look at addNode() in [tree.c](tree.c) to see how that can be modified to add nodes to a BST.
+* If you have time, modify the add node to add as one would in a BST node. `strcmp` can give you the high/low for each node.
+
+
+## Conclusion
+In this team activity, we have learned about the different types of search algorithms, and how they can be used to traverse a tree. We have also learned about the different types of tree traversals, and how they can be used to print out the tree in different orders.
+
+We will come back to the traversal types when we explore graphs, which are a more complex data structure than trees but the fundamentals are the same. Searching is used throughout computer science, and knowing your data and which search is best
+often helps with the efficiency of your program. For a Binary Search Tree (your homework), that is almost exclusively depth first traversal of your code, as you always know "which direction" to traverse until you find the node you are looking for.
+
+## Technical Interview Practice
+
+Take time practicing some of the past modules challenge problems. While you may not have time for everyone to do this, have a couple people practice "live coding". Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. I recommend that you setup a rotation of people to practice this skill within your team, ideally a couple every week. The other teams members can offer support, and then do a code review after a solution is generated. Then, as a group work a technical interview problem to discuss possible solutions.
+
 
 ## 📚 Resources
-* [Left/Right Shift Operators in C](https://www.geeksforgeeks.org/left-shift-right-shift-operators-c-cpp/)
-* [List of Hash algorithms](https://en.wikipedia.org/wiki/List_of_hash_functions#Non-cryptographic_hash_functions)
-* [djb2 Hash explained](https://theartincode.stanis.me/008-djb2/)
+* [Ordering Differences of DFS]
+* [BFS vs DFS Binary Tree]
+* [Difference Between BFS and DFS]
+* [DFS Traversal of a Tree Using Recursion]
+* [Tree Traversal BFS and DFS]
+* [Visual BST]
+* [GDB Cheat Sheet]
+* [GNU Make Manual]
+
+
+---
+
+[2]: Names were generated by Fantasy Name Generator: https://www.fantasynamegenerators.com/gnome-names.php
+
+[Ordering Differences of DFS]: https://en.wikipedia.org/wiki/Depth-first_search#Output_of_a_depth-first_search
+[Depth First Search]: https://en.wikipedia.org/wiki/Depth-first_search
+[Breadth First Search]: https://en.wikipedia.org/wiki/Breadth-first_search
+[GDB Cheat Sheet]: https://cs.brown.edu/courses/cs033/docs/guides/gdb.pdf
+[Visual BST]: https://visualgo.net/en/bst
+[BFS vs DFS Binary Tree]: https://www.geeksforgeeks.org/bfs-vs-dfs-binary-tree/
+[Difference Between BFS and DFS]: https://www.geeksforgeeks.org/difference-between-bfs-and-dfs/ 
+[DFS Traversal of a Tree Using Recursion]: https://www.geeksforgeeks.org/dfs-traversal-of-a-tree-using-recursion/
+[Tree Traversal BFS and DFS]: https://www.codingeek.com/data-structure/tree-traversal-bfs-and-dfs-introduction-explanation-and-implementation/
+[GNU Make Manual]: https://www.gnu.org/software/make/manual/make.html

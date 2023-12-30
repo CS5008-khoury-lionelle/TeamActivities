@@ -99,12 +99,9 @@ As a group, discuss how you would insert and remove an item in the middle of the
 Reviewing back to your CS 5001 class, you learned briefly about stacks and queues. Take a moment to discuss the differences, and then describe how a linked list could be used for either. Is it better for a stack or a queue? Why? This may involve some research, but why would you want to use a linked list over an array for a stack or queue? (and vise versa). 
 
 
-## Part 3: Leet Code Practice 
+## Technical Interview Practice
 
-Go to module 02, and you will see a link to a Leet Code Page. For every weekly team activity, you will be asked to go to past modules and work on the leet code practice as a team. (in this case, Module 02 is the only past module).
-
-As a team, pick 2 problems to work on. Discuss your solutions and how you got there. It is alright if you work / discuss together, but one person should not tell the others how to do it. If a person is already familiar with the problem, they should help guide the others to the solution or maybe just be the person that types while the others talk. Remember, this is your study group, the more you help each other **understand**, the better you will all be!
-
+Take time practicing some of the past modules challenge problems. While you may not have time for everyone to do this, have a couple people practice "live coding". Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. I recommend that you setup a rotation of people to practice this skill within your team, ideally a couple every week. The other teams members can offer support, and then do a code review after a solution is generated. Then, as a group work a technical interview problem to discuss possible solutions.
 
 ## 📝 Grading Rubric
 

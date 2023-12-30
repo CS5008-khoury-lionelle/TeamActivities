@@ -123,9 +123,9 @@ With your group, talk about the differences between Insertion, Bubble, and Selec
 Work each one out on paper - similar to how you did for the 5 value array above for bubble sort. Make you use the [visualize] tool to better understand!
 
 
-## Leet Code Practice
+## Technical Interview Practice
 
-Lastly, work on modules 03 leet code practice. Everyone pick a different problem, and take turns explaining your solution *as* you work through the code (as time allows). This is called "live coding" and often required in technical interviews. Moving forward, we would like you to emphasize the explaining of code as you work through it, to better prepare you for technical interviews.
+Lastly, work on modules 03 leet code practice. Everyone pick a different problem, and take turns explaining your solution *as* you work through the code (as time allows). This is called "live coding" and often required in technical interviews. Moving forward, we would like you to emphasize the explaining of code as you work through it, to better prepare you for technical interviews. You should also discuss one of the technical interview questions as a group. 
 
 
 ## 📚 Resources

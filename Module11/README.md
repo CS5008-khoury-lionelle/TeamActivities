@@ -1,89 +1,99 @@
-# Team Activity: Graph Representation - a Look at Adjacency Lists and Adjacency Matrices
+# Team Activity: Exploring Dijkstra's Algorithm
 
-In this team activity, we will explore the two most common ways to represent a graph: adjacency lists and adjacency matrices. We will also look at the pros and cons of each representation.
+
+In this team activity, you will explore Dijkstra's algorithm run time efficiency by comparing it against a version that uses a priority queue/heap, and a version that uses a list. You will also explore the effect of the graph density on the run time of Dijkstra's algorithm.
 
 ## Provided Files
-You will see there are a fair amount of provided files. This to help you see how to break up the files in a C program between headers and implementation files. You will also see that there are two different implementations of the graph data structure. One uses adjacency lists, and the other uses adjacency matrices. You will be implementing the functions in [converter.c](converter.c) to convert between the two representations.
+For this team activity, we have provided three python files. 
+* [graph.py](graph.py) - Contains the Graph class, which is used to represent a graph. 
+* [shortest_path.py](shortest_path.py) - Contains the Dijkstra's shortest_path functions, which is used to find the shortest path between two nodes in a graph. 
+* [tests.py](tests.py) - Contains tests including the ability to time the run time of the shortest_path functions.
 
 
-## 📝 Practice Drawing a Graph
+👉🏽 **Task** 👈🏽
 
-Before you work on that, review the provided code and explain to each other the various lines. This is called a **CODE WALK** and is often a skill asked in technical interviews.  Make sure you understand how the code works, and that you can explain it to your teammates. 
+1. Read through the code in the provided files. Explain the various lines to each other.
+   * What is a major difference between the shortest_path functions?
+   * Why would this matter? (We will continue to explore this throughout the team activity)
+2. In graph.py, we are creating  a small and medium graph. Take a moment and draw on the paper the visualization of the graph that those represent. 
 
-At this point, you can run `make` which will build the program. You can then run `./adj_fun.out` to run the program. You will see it will print out the graph as an adjacency matrix. 
 
-Now, draw the graph on a piece of paper. 
+## Visualizing Dijkstra's Algorithm
 
-### Example: 
+Take the graph you built for `create_small_test_graph()`, and work through manually with your group how Dijkstra's algorithm would work. As a reminder, here is Dijkstra's algorithm in more plain terms:
 
-```text
-0 2 4 
-2 0 2 
-4 2 0 
+```python
+def dijkstra(graph, start, end):
+    # Initialize the distance to all nodes to infinity
+    # Initialize the distance to the start node to 0
+    # Initialize the previous node to None for all nodes
+    # Initialize the previous node to the start node for the start node
+    # Initialize the unvisited set to contain all nodes
+    # While the unvisited set is not empty:
+        # Find the unvisited node with the smallest distance
+        # Remove the node from the unvisited set
+        # For each neighbor of the node:
+            # Calculate the distance to the neighbor
+            # If the distance to the neighbor is less than the current distance:
+                # Update the distance to the neighbor
+                # Update the previous node to the current node
+    # Return the distance to the end node
+```
+👉🏽 **Task** 👈🏽
+Visualize the algorithm on the graph you drew.
+
+
+You can also use the Visualization tool provided by the University of San Francisco to visualize Dijkstra's algorithm (link in the resources section). 
+
+## Running the Code
+Once you have a good understanding of the algorithm and the code, it is time to run tests. You can do this by loading
+tests.py into the interactive python environment. 
+
+You can do this via the command line with:
+
+```bash
+$ python3 -i tests.py
 ```
 
-```mermaid
-flowchart TD
-    0 <-- 2 --> 1
-    0 <-- 4 --> 2
-    1 <-- 2 --> 2
-    2 <-- 2 --> 1
-    1 <-- 2 --> 0
-    2 <-- 4 --> 0
+This will load the tests.py file into the interactive python environment, which in turn imports the graph.py and shortest_path.py files. From here, you can run various commands such as
 
+```python
+>>> test_small()
+nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] edges: [('A', 'B', 1), ('A', 'C', 1), ('A', 'D', 1), ('B', 'E', 1), ('B', 'F', 1), ('C', 'F', 1), ('C', 'G', 1), ('D', 'G', 1), ('D', 'H', 1), ('E', 'F', 1), ('F', 'G', 1), ('G', 'H', 1)]
+2
+>>> test_medium()
+nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'] edges: [('A', 'B', 1), ('A', 'C', 1), ('A', 'D', 1), ('B', 'E', 1), ('B', 'F', 1), ('C', 'F', 1), ('C', 'G', 1), ('D', 'G', 1), ('D', 'H', 1), ('E', 'F', 1), ('F', 'G', 1), ('G', 'H', 1), ('H', 'I', 1), ('H', 'J', 1)]
+3
 ```
 
-or if you change the option to be directed..
+More importantly, you will see two tests that use timings. 
 
-```text
-```text
-0 2 4 
-0 0 3 
-0 0 0 
-```
+👉🏽 **Task** 👈🏽
 
+Build a table based on the timings for both run_timed_test, both with a mostly connected graph and a sparser graph. The N will vary greatly between the two. For mostly connected, a 500 node graph took about ~2 minutes. For a sparser 10,000 node graph took 18 seconds to run the entire function. This is the difference of $2n-1$ compared to up to $n^2$ edges. 
 
-```mermaid
-flowchart TD
-   0 -- 2 --> 1
-   0 -- 4 --> 2
-   1 -- 3 --> 2
-```
+### Discussion  
 
-👉🏽 **Task** 👈🏽: Modify the code in [adj_fun.c](adj_fun.c) to print out the graph as an adjacency matrix using `DIRECTED_ONE_DIRECTION`, `DIRECTED_UNBALANCED`, and `UNDIRECTED`. You can do this by changing the `type` variable in the `main` function. 
-
-**FOR EACH** of the types, draw the graph on a piece of paper. Talk it through with your group.
+* Take a moment to discuss the differences in speeds, what are some major points of difference between the different implementations of Dijkstra's algorithm? 
+* Did the differences go away (mostly) in a certain situation? 
+  * If so, what triggered that (think in respect to edges)?
 
 
-## 📝 Converters
+## Research
 
+👉🏽 **Task** 👈🏽
 
-👉🏽 **Task** 👈🏽: Write converts to convert between Adjacency Lists and Adjacency Matrices. You will need to implement the following functions:
-* `AdjMatrix *convert_list_to_matrix(AdjList *list)`
-* `AdjList *convert_matrix_to_list(AdjMatrix *matrix)`
+Research the time and space complexity of Dijkstra's algorithm. Between the two different implementations presented, what is the time and space complexity of each?
 
+* In regards to time/space complexity, how did the total number of edges affect the run time of the algorithm?
 
-Run the program and see if the matrix matches the list. You may need to draw out the graph on a piece of paper to make sure the conversion is correct.
+## Technical Interview Practice
 
-## Discussion
+Take time practicing some of the past modules challenge problems. While you may not have time for everyone to do this, have a couple people practice "live coding". Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. I recommend that you setup a rotation of people to practice this skill within your team, ideally a couple every week. The other teams members can offer support, and then do a code review after a solution is generated. Then, as a group work a technical interview problem to discuss possible solutions.
 
-With your group, discuss the following
-
-1. What are the pros and cons of each representation?
-2. What is the space complexity of each representation?
-3. What about time complexity of accessing a specific edge?
-   * Give examples of when you would use each representation.
-4. When would you want to (or not use) each?
-
-
-## Leet Code
-Take time practicing some of the past modules leet code. While you may not have time for everyone to do this, have a couple people practice "live coding". Live coding is a skill in interviews were you are asked to describe code **while** you are writing it. It can be a challenging skill, and it takes practice. I recommend that you setup a rotation of people to practice this skill within your team, ideally a couple every week. The other teams members can offer support, and then do a code review after a solution is generated. Discuss pros/cons of the leet code solution as well as other potential ways to solve the problem.
 
 
 ## 📚 Resources
-* Adjacency List: https://en.wikipedia.org/wiki/Adjacency_list
-* Adjacency Matrix: https://en.wikipedia.org/wiki/Adjacency_matrix
-* Graph Representation: https://www.geeksforgeeks.org/graph-and-its-representations/
-* Graph Visualization: https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
-* Comparison between Adjacency List and Adjacency Matrix: https://www.geeksforgeeks.org/comparison-between-adjacency-list-and-adjacency-matrix-representation-of-graph/
-
+* Dijkstra's Algorithm - [https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) 
+* Dijkstra's Algorithm - [https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/](https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/)
+* Dijkstra's Algorithm Visualization - [https://www.cs.usfca.edu/~galles/visualization/Dijkstra.html](https://www.cs.usfca.edu/~galles/visualization/Dijkstra.html)
