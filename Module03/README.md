@@ -16,7 +16,6 @@ When working in teams, remember do not let one person do all the work. Make sure
 Programs, especially command line programs, have arguments that are passed into them, and based on those arguments it changes how the program runs.  For example, 
 
 * `ls -l` on the linux / macOS command line will list the files in the current directory in a long format. 
-* `code my_file.c` will open the file my_file.c in Visual Studio Code.
 * `gcc -g -Wall my_file.c -o my_file.out` will compile the file my_file.c into an executable called my_file.out
 
 Everything after the program name, is an argument!  
@@ -135,9 +134,9 @@ That is the letter O, not the number 0. This will compile the code with the high
 * How did the total cycle costs of the program change? When setting up this team activity, it was a substantial difference! 
 
 
-## Leet Code Challenge Problem Practice
+## Technical Interview Practice
 
-As per our standard end of the team activity - go to the Module 02 challenge problems, and as a group pick a couple to work on. Discuss your solutions. 
+As per our standard end of the team activity - go to the Module 02 challenge problems, and as a group pick a couple to work on. Discuss your solutions. Include a solution in your team activity meeting files. You are also encouraged to take a technical interview question and discuss solutions as a group.  
 
 
 ## 📚 Resources
